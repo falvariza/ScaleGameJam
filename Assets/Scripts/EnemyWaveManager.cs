@@ -42,22 +42,22 @@ public class EnemyWaveManager : MonoBehaviour
                 case SpawnPosition.Left:
                     randomX = leftBorderSpawnX;
                     randomY = Random.Range(bottomBorderSpawnY, topBorderSpawnY);
-                    Enemy.Create(new Vector3(randomX, randomY, 0));
+                    EnemyGenerator.GenerateRandomEnemyAt(new Vector3(randomX, randomY, 0));
                     break;
                 case SpawnPosition.Right:
                     randomX = rightBorderSpawnX;
                     randomY = Random.Range(bottomBorderSpawnY, topBorderSpawnY);
-                    Enemy.Create(new Vector3(randomX, randomY, 0));
+                    EnemyGenerator.GenerateRandomEnemyAt(new Vector3(randomX, randomY, 0));
                     break;
                 case SpawnPosition.Top:
                     randomX = Random.Range(leftBorderSpawnX, rightBorderSpawnX);
                     randomY = topBorderSpawnY;
-                    Enemy.Create(new Vector3(randomX, randomY, 0));
+                    EnemyGenerator.GenerateRandomEnemyAt(new Vector3(randomX, randomY, 0));
                     break;
                 case SpawnPosition.Bottom:
                     randomX = Random.Range(leftBorderSpawnX, rightBorderSpawnX);
                     randomY = bottomBorderSpawnY;
-                    Enemy.Create(new Vector3(randomX, randomY, 0));
+                    EnemyGenerator.GenerateRandomEnemyAt(new Vector3(randomX, randomY, 0));
                     break;
             }
         }
