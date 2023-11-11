@@ -31,6 +31,10 @@ public class Player : MonoBehaviour
         if (enemy != null) {
             Destroy(enemy.gameObject);
             sizeSystem.IncreaseSize();
+
+            if (sizeSystem.IsExploded()) {
+                GameManager.Instance.GameOver();
+            }
         }
     }
 }
