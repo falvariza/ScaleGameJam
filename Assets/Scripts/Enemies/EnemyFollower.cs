@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class EnemyFollower : Enemy
 {
-    public static Enemy Create(Vector3 position)
-    {
-        Transform pfenemy = Resources.Load<Transform>("EnemyFollower");
-        Transform enemyTransform = Instantiate(pfenemy, position, Quaternion.identity);
-
-        return enemyTransform.GetComponent<EnemyFollower>();
-    }
-
     [SerializeField] private float speed;
     [SerializeField] private float targetFindRadius = 2f;
     [SerializeField] private float targetLeaveRadius = 3f;

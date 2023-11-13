@@ -24,14 +24,15 @@ public class GameManager : MonoBehaviour
     {
         gamePlayingTimer -= Time.deltaTime;
 
-        Debug.Log(GetGamePlayingTimerNormalized());
-
         if (gamePlayingTimer <= 0f)
         {
-            // Game Over
-            Debug.Log("Game Over");
-            Time.timeScale = 0f;
+            GameOver();
         }
+    }
+
+    public bool IsGameOver()
+    {
+        return gamePlayingTimer <= 0f;
     }
 
     public void GameOver()

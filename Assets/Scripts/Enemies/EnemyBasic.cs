@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class EnemyBasic : Enemy
 {
-    public static Enemy Create(Vector3 position)
-    {
-        Transform pfenemy = Resources.Load<Transform>("EnemyBasic");
-        Transform enemyTransform = Instantiate(pfenemy, position, Quaternion.identity);
-
-        return enemyTransform.GetComponent<EnemyBasic>();
-    }
-
     [SerializeField] private float speed;
 
     protected override void Awake()
