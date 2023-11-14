@@ -86,7 +86,7 @@ public class PowerUp : MonoBehaviour
 
     protected virtual void PowerUpAction()
     {
-        Debug.Log("Power Up collected, issuing payload for: " + gameObject.name);
+        // Debug.Log("Power Up collected, issuing payload for: " + gameObject.name);
 
         // If we're instant use we also expire self immediately
         if(expiresImmediately)
@@ -108,7 +108,7 @@ public class PowerUp : MonoBehaviour
         // {
         //     ExecuteEvents.Execute<IPowerUpEvents>(go, null,(x, y) => x.OnPowerUpExpired(this, playerSizeSystem));
         // }
-        Debug.Log("Power Up has expired, removing after a delay for: " + gameObject.name);
+        // Debug.Log("Power Up has expired, removing after a delay for: " + gameObject.name);
         DestroySelfAfterDelay();
     }
 

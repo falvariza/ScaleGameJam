@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; }
+
     private enum SpawnPosition
     {
         Left,
@@ -19,6 +21,11 @@ public class LevelManager : MonoBehaviour
     private float spawnTimer;
 
     private WaveConfigurationSO[] waveConfigurations;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -104,5 +111,10 @@ public class LevelManager : MonoBehaviour
     private WaveConfigurationSO GetNextWave()
     {
         return waveConfigurations.Length > currentWaveIndex + 1 ? waveConfigurations[currentWaveIndex + 1] : null;
+    }
+
+    public SpawnBordersCoordinates GetSpawnBordersCoordinates()
+    {
+        return spawnBordersCoordinates;
     }
 }

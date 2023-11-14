@@ -42,4 +42,15 @@ public class Player : MonoBehaviour
     {
         return transform.position;
     }
+
+    public SizeSystem GetSizeSystem()
+    {
+        return GetComponent<SizeSystem>();
+    }
+
+    public Vector3 GetColliderSize()
+    {
+        return GetComponent<CircleCollider2D>().bounds.size;
+    }
+
 }

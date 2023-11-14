@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     public float GetGamePlayingCountdownInSeconds()
     {
-        return Mathf.Round(gamePlayingTimer);
+        return Mathf.Ceil(gamePlayingTimer);
     }
 
     public float GetTranscurringPlayingTime()
