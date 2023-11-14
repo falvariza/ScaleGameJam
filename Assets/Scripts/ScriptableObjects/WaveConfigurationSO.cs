@@ -9,5 +9,6 @@ public class WaveConfigurationSO : ScriptableObject
     public float spawnInterval;
     public float spawnIntervalRandomness;
     public int maxNumberOfEnemiesPerSpawn;
+    public float waveStartingTime;
 
 }

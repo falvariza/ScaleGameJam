@@ -12,15 +12,19 @@ public class LevelManager : MonoBehaviour
         Bottom
     }
 
-    [SerializeField] private WaveConfigurationSO[] waveConfigurations;
+    [SerializeField] private LevelConfigurationSO levelConfiguration;
     [SerializeField] private SpawnBordersCoordinates spawnBordersCoordinates;
 
     private int currentWaveIndex = 0;
     private float spawnTimer;
 
+    private WaveConfigurationSO[] waveConfigurations;
+
     private void Start()
     {
+        waveConfigurations = levelConfiguration.wavesConfigurations;
         spawnTimer = waveConfigurations[currentWaveIndex].spawnInterval;
+        GameManager.Instance.StartGame(levelConfiguration.levelDuration); // Temporary
     }
 
     private void Update()
@@ -32,6 +36,11 @@ public class LevelManager : MonoBehaviour
             spawnTimer += waveConfigurations[currentWaveIndex].spawnInterval;
             SpawnWave();
             spawnTimer = waveConfigurations[currentWaveIndex].spawnInterval + Random.Range(-waveConfigurations[currentWaveIndex].spawnIntervalRandomness, waveConfigurations[currentWaveIndex].spawnIntervalRandomness);
+        }
+
+        if (GetNextWave() != null && GetNextWave().waveStartingTime <= GameManager.Instance.GetTranscurringPlayingTime())
+        {
+            StartNextWave();
         }
     }
 
@@ -85,5 +94,15 @@ public class LevelManager : MonoBehaviour
         }
 
         return new Vector3(randomX, randomY, 0);
+    }
+
+    private WaveConfigurationSO GetCurrentWave()
+    {
+        return waveConfigurations.Length > currentWaveIndex ? waveConfigurations[currentWaveIndex] : null;
+    }
+
+    private WaveConfigurationSO GetNextWave()
+    {
+        return waveConfigurations.Length > currentWaveIndex + 1 ? waveConfigurations[currentWaveIndex + 1] : null;
     }
 }

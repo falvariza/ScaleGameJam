@@ -9,6 +9,6 @@ public class GameStatsUI : MonoBehaviour
 
     private void Update()
     {
-        countdownText.text = GameManager.Instance.GetGamePlayingTimeInSeconds().ToString();
+        countdownText.text = GameManager.Instance.GetGamePlayingCountdownInSeconds().ToString();
     }
 }

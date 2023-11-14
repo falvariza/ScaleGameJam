@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private float gamePlayingTimerMax = 15f;
+    public event EventHandler OnGameStarted;
+    public event EventHandler OnGameOver;
+
+    private float gamePlayingTimerMax;
+    private bool isGameStarted = false;
 
     private float gamePlayingTimer;
 
@@ -15,19 +20,30 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        gamePlayingTimer = gamePlayingTimerMax;
-    }
-
     private void Update()
     {
+        HandleGamePlayingTimer();
+    }
+
+    private void HandleGamePlayingTimer()
+    {
+        if (!isGameStarted) return;
+
         gamePlayingTimer -= Time.deltaTime;
 
         if (gamePlayingTimer <= 0f)
         {
             GameOver();
         }
+    }
+
+    public void StartGame(float gamePlayingTimerMax)
+    {
+        Time.timeScale = 1f;
+        this.gamePlayingTimerMax = gamePlayingTimerMax;
+        gamePlayingTimer = gamePlayingTimerMax;
+        isGameStarted = true;
+        OnGameStarted?.Invoke(this, EventArgs.Empty);
     }
 
     public bool IsGameOver()
@@ -37,13 +53,19 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("Game Over");
+        isGameStarted = false;
         Time.timeScale = 0f;
+        OnGameOver?.Invoke(this, EventArgs.Empty);
     }
 
-    public float GetGamePlayingTimeInSeconds()
+    public float GetGamePlayingCountdownInSeconds()
     {
         return Mathf.Round(gamePlayingTimer);
+    }
+
+    public float GetTranscurringPlayingTime()
+    {
+        return Mathf.Round(gamePlayingTimerMax - gamePlayingTimer);
     }
 
     public float GetGamePlayingTimerNormalized()
