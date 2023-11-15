@@ -17,6 +17,12 @@ public class PowerUpsManager : MonoBehaviour
     private void Start()
     {
         Player.Instance.GetSizeSystem().OnSizeIncreased += HandleSizeIncreased;
+        GameManager.Instance.OnCompleteLevel += HandleCompleteLevel;
+    }
+
+    private void HandleCompleteLevel(object sender, System.EventArgs e)
+    {
+        DestroyAllPowerUps();
     }
 
     private void HandleSizeIncreased(object sender, SizeSystem.OnSizeIncreasedArgs e)
@@ -51,8 +57,7 @@ public class PowerUpsManager : MonoBehaviour
         return spawnPosition;
     }
 
-
-    Vector3 FixPositionInRange(Vector3 position, Vector3 playerPosition, float minSpawnRadius, float maxSpawnRadius)
+    private Vector3 FixPositionInRange(Vector3 position, Vector3 playerPosition, float minSpawnRadius, float maxSpawnRadius)
     {
         SpawnBordersCoordinates borders = LevelManager.Instance.GetSpawnBordersCoordinates();
         float offset = 5f;
@@ -78,5 +83,15 @@ public class PowerUpsManager : MonoBehaviour
         }
 
         return position;
+    }
+
+    private void DestroyAllPowerUps()
+    {
+        PowerUp[] powerUps = FindObjectsOfType<PowerUp>();
+
+        foreach (PowerUp powerUp in powerUps)
+        {
+            Destroy(powerUp.gameObject);
+        }
     }
 }

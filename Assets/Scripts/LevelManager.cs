@@ -14,9 +14,9 @@ public class LevelManager : MonoBehaviour
         Bottom
     }
 
-    [SerializeField] private LevelConfigurationSO levelConfiguration;
     [SerializeField] private SpawnBordersCoordinates spawnBordersCoordinates;
 
+    private LevelConfigurationSO levelConfiguration;
     private int currentWaveIndex = 0;
     private float spawnTimer;
 
@@ -29,13 +29,18 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        waveConfigurations = levelConfiguration.wavesConfigurations;
-        spawnTimer = waveConfigurations[currentWaveIndex].spawnInterval;
-        GameManager.Instance.StartGame(levelConfiguration.levelDuration); // Temporary
+        GameManager.Instance.OnCompleteLevel += HandleCompleteLevel;
+    }
+
+    private void HandleCompleteLevel(object sender, System.EventArgs e)
+    {
+        DestroyAllEnemies();
     }
 
     private void Update()
     {
+        if (levelConfiguration == null) return;
+
         spawnTimer -= Time.deltaTime;
 
         if (spawnTimer <= 0f)
@@ -116,5 +121,21 @@ public class LevelManager : MonoBehaviour
     public SpawnBordersCoordinates GetSpawnBordersCoordinates()
     {
         return spawnBordersCoordinates;
+    }
+
+    public void StartLevel(LevelConfigurationSO levelConfiguration)
+    {
+        this.levelConfiguration = levelConfiguration;
+        waveConfigurations = levelConfiguration.wavesConfigurations;
+        spawnTimer = waveConfigurations[currentWaveIndex].spawnInterval;
+    }
+
+    private void DestroyAllEnemies()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
     }
 }

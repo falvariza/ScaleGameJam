@@ -6,6 +6,9 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] protected bool expiresImmediately;
     [SerializeField] protected SpriteRenderer powerUpVisual;
+    [SerializeField] protected bool shouldDestroyAfterTimeout;
+    [SerializeField] protected float destroyTimeout;
+
     // public GameObject specialEffect;
     // public AudioClip soundEffect;
 
@@ -23,6 +26,26 @@ public class PowerUp : MonoBehaviour
     protected virtual void Start()
     {
         powerUpState = PowerUpState.InAttractMode;
+    }
+
+    protected virtual void Update()
+    {
+        HandleSelfDestruction();
+    }
+
+    protected virtual void HandleSelfDestruction()
+    {
+        if(!shouldDestroyAfterTimeout)
+        {
+            return;
+        }
+
+        destroyTimeout -= Time.deltaTime;
+
+        if(destroyTimeout <= 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
