@@ -9,10 +9,42 @@ public class Player : MonoBehaviour
 
     private SizeSystem sizeSystem;
 
+    private float playerScale;
+    private float scalingSpeed = 1f;
+    private float scalingDuration = .5f;
+
     private void Awake()
     {
         sizeSystem = GetComponent<SizeSystem>();
         Instance = this;
+        playerScale = sizeSystem.CurrentSize.size;
+        sizeSystem.OnSizeIncreased += SizeSystem_OnSizeIncreased;
+        sizeSystem.OnSizeDecreased += SizeSystem_OnSizeDecreased;
+    }
+
+    private void SizeSystem_OnSizeDecreased(object sender, System.EventArgs e)
+    {
+        StartCoroutine(ScalePlayer(sizeSystem.CurrentSize.size));
+    }
+
+    private void SizeSystem_OnSizeIncreased(object sender, SizeSystem.OnSizeIncreasedArgs e)
+    {
+        StartCoroutine(ScalePlayer(e.playerSize.size));
+    }
+
+    private IEnumerator ScalePlayer(float targetScale)
+    {
+        float timer = 0f;
+        float startScale = playerScale;
+
+        while (timer < scalingDuration)
+        {
+            timer += Time.deltaTime;
+            playerScale = Mathf.Lerp(startScale, targetScale, timer / scalingDuration);
+            yield return null;
+        }
+
+        playerScale = targetScale;
     }
 
     private void Update()
@@ -25,9 +57,8 @@ public class Player : MonoBehaviour
         if (sizeSystem.IsExploded()) return;
         if (!GameManager.Instance.IsGamePlaying()) return;
 
-        float size = sizeSystem.CurrentSize.size;
         float speed = sizeSystem.CurrentSize.speed;
-        transform.localScale = new Vector3(size, size, 1);
+        transform.localScale = new Vector3(playerScale, playerScale, 1);
 
         transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed;
     }

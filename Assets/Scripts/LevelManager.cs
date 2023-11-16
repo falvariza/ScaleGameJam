@@ -35,7 +35,9 @@ public class LevelManager : MonoBehaviour
     private void HandleCompleteLevel(object sender, System.EventArgs e)
     {
         DestroyAllEnemies();
-        currentWaveIndex = 0;
+        this.currentWaveIndex = 0;
+        this.levelConfiguration = null;
+
         Player.Instance.ResetPlayerPosition();
     }
 
@@ -47,9 +49,10 @@ public class LevelManager : MonoBehaviour
 
         if (spawnTimer <= 0f)
         {
-            spawnTimer += waveConfigurations[currentWaveIndex].spawnInterval;
+            WaveConfigurationSO currentWave = GetCurrentWave();
+            spawnTimer += currentWave.spawnInterval;
             SpawnWave();
-            spawnTimer = waveConfigurations[currentWaveIndex].spawnInterval + Random.Range(-waveConfigurations[currentWaveIndex].spawnIntervalRandomness, waveConfigurations[currentWaveIndex].spawnIntervalRandomness);
+            spawnTimer = currentWave.spawnInterval + Random.Range(-currentWave.spawnIntervalRandomness, currentWave.spawnIntervalRandomness);
         }
 
         if (GetNextWave() != null && GetNextWave().waveStartingTime <= GameManager.Instance.GetTranscurringPlayingTime())
@@ -65,7 +68,7 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
-        var currentWave = waveConfigurations[currentWaveIndex];
+        WaveConfigurationSO currentWave = GetCurrentWave();
 
         for (int i = 0; i < Random.Range(1, currentWave.maxNumberOfEnemiesPerSpawn); i++)
         {
@@ -128,8 +131,9 @@ public class LevelManager : MonoBehaviour
     public void StartLevel(LevelConfigurationSO levelConfiguration)
     {
         this.levelConfiguration = levelConfiguration;
+        this.currentWaveIndex = 0;
         waveConfigurations = levelConfiguration.wavesConfigurations;
-        spawnTimer = waveConfigurations[currentWaveIndex].spawnInterval;
+        spawnTimer = GetCurrentWave().spawnInterval;
     }
 
     private void DestroyAllEnemies()
