@@ -35,6 +35,8 @@ public class LevelManager : MonoBehaviour
     private void HandleCompleteLevel(object sender, System.EventArgs e)
     {
         DestroyAllEnemies();
+        currentWaveIndex = 0;
+        Player.Instance.ResetPlayerPosition();
     }
 
     private void Update()

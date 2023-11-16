@@ -11,18 +11,32 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnGameOver;
     public event EventHandler OnCompleteLevel;
     public event EventHandler OnCompleteFullLevel;
+    public event EventHandler OnStateChanged;
 
     [SerializeField] private FullLevelConfigurationSO fullLevelConfiguration;
 
+
+    private enum State
+    {
+        Idle,
+        CountdownToStart,
+        GamePlaying,
+        CompletedLevel,
+        GameOver,
+    }
+
+    private State gameState;
     private int currentLevelIndex = 0;
     private float gamePlayingTimerMax;
-    private bool isGameStarted = false;
+    private float countdownToStartTimerMax = 3f;
+    private float countdownToStartTimer;
 
     private float gamePlayingTimer;
 
     private void Awake()
     {
         Instance = this;
+        gameState = State.Idle;
     }
 
     private void Start()
@@ -32,13 +46,40 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        HandleGamePlayingTimer();
+        HandleGameState();
+    }
+
+    private void HandleGameState()
+    {
+        switch (gameState)
+        {
+            case State.Idle:
+                break;
+            case State.CountdownToStart:
+                countdownToStartTimer -= Time.deltaTime;
+
+                if (countdownToStartTimer < 0f)
+                {
+                    LevelConfigurationSO currentLevelConfiguration = GetCurrentLevelConfiguration();
+                    gamePlayingTimerMax = currentLevelConfiguration.levelDuration;
+                    gamePlayingTimer = gamePlayingTimerMax;
+                    gamePlayingTimer = gamePlayingTimerMax;
+                    LevelManager.Instance.StartLevel(currentLevelConfiguration);
+                    UpdateState(State.GamePlaying);
+                }
+                break;
+            case State.GamePlaying:
+                HandleGamePlayingTimer();
+                break;
+            case State.GameOver:
+                break;
+            default:
+                break;
+        }
     }
 
     private void HandleGamePlayingTimer()
     {
-        if (!isGameStarted) return;
-
         gamePlayingTimer -= Time.deltaTime;
 
         if (gamePlayingTimer <= 0f)
@@ -49,17 +90,13 @@ public class GameManager : MonoBehaviour
 
     private void CompleteLevel()
     {
-        isGameStarted = false;
         Time.timeScale = 0f;
+
+        UpdateState(State.CompletedLevel);
 
         if (currentLevelIndex == fullLevelConfiguration.levelsConfigurations.Length - 1)
         {
             OnCompleteFullLevel?.Invoke(this, EventArgs.Empty);
-        }
-        else
-        {
-            OnCompleteLevel?.Invoke(this, EventArgs.Empty);
-            StartNextLevel(); // Temp
         }
     }
 
@@ -68,14 +105,22 @@ public class GameManager : MonoBehaviour
         return fullLevelConfiguration.levelsConfigurations[currentLevelIndex];
     }
 
+    private void UpdateState(State newState)
+    {
+        gameState = newState;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void StartGameCountdown()
+    {
+        Time.timeScale = 1f;
+        countdownToStartTimer = countdownToStartTimerMax;
+        UpdateState(State.CountdownToStart);
+    }
+
     public void StartGame()
     {
-        LevelConfigurationSO currentLevelConfiguration = GetCurrentLevelConfiguration();
-        Time.timeScale = 1f;
-        gamePlayingTimerMax = currentLevelConfiguration.levelDuration;
-        gamePlayingTimer = gamePlayingTimerMax;
-        isGameStarted = true;
-        LevelManager.Instance.StartLevel(currentLevelConfiguration);
+        StartGameCountdown();
         OnGameStarted?.Invoke(this, EventArgs.Empty);
     }
 
@@ -86,13 +131,13 @@ public class GameManager : MonoBehaviour
 
     public void StartNextLevel()
     {
+        OnCompleteLevel?.Invoke(this, EventArgs.Empty);
         currentLevelIndex++;
         StartGame();
     }
 
     public void GameOver()
     {
-        isGameStarted = false;
         Time.timeScale = 0f;
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
@@ -110,5 +155,25 @@ public class GameManager : MonoBehaviour
     public float GetGamePlayingTimerNormalized()
     {
         return 1 - (gamePlayingTimer / gamePlayingTimerMax);
+    }
+
+    public bool IsGamePlaying()
+    {
+        return gameState == State.GamePlaying;
+    }
+
+    public bool IsCountdownToStartActive()
+    {
+        return gameState == State.CountdownToStart;
+    }
+
+    public float GetCountdownToStartTimer()
+    {
+        return countdownToStartTimer;
+    }
+
+    public bool IsLevelCompleted()
+    {
+        return gameState == State.CompletedLevel;
     }
 }

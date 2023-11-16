@@ -17,7 +17,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        HandleMovement();
+    }
+
+    private void HandleMovement()
+    {
         if (sizeSystem.IsExploded()) return;
+        if (!GameManager.Instance.IsGamePlaying()) return;
 
         float size = sizeSystem.CurrentSize.size;
         float speed = sizeSystem.CurrentSize.speed;
@@ -51,6 +57,11 @@ public class Player : MonoBehaviour
     public Vector3 GetColliderSize()
     {
         return GetComponent<CircleCollider2D>().bounds.size;
+    }
+
+    public void ResetPlayerPosition()
+    {
+        transform.position = Vector3.zero;
     }
 
 }
