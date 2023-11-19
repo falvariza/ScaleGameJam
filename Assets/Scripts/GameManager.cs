@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnCompleteLevel;
     public event EventHandler OnCompleteFullLevel;
     public event EventHandler OnStateChanged;
+    public event EventHandler OnRestartGame;
 
     [SerializeField] private FullLevelConfigurationSO fullLevelConfiguration;
 
@@ -126,7 +127,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameOver()
     {
-        return gamePlayingTimer <= 0f;
+        return gameState == State.GameOver;
     }
 
     public void StartNextLevel()
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0f;
+        UpdateState(State.GameOver);
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
 
@@ -175,5 +177,24 @@ public class GameManager : MonoBehaviour
     public bool IsLevelCompleted()
     {
         return gameState == State.CompletedLevel;
+    }
+
+    public bool IsFullLevelCompleted()
+    {
+        return IsLevelCompleted() && currentLevelIndex == fullLevelConfiguration.levelsConfigurations.Length - 1;
+    }
+
+    public string GetLevelProgressText()
+    {
+        return $"{currentLevelIndex + 1}/{fullLevelConfiguration.levelsConfigurations.Length}";
+    }
+
+    public void RestartGame()
+    {
+        currentLevelIndex = 0;
+
+        OnRestartGame?.Invoke(this, EventArgs.Empty);
+        Debug.Log("Estamos enviando??");
+        StartGame();
     }
 }
