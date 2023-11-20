@@ -9,6 +9,10 @@ public class PowerUpsManager : MonoBehaviour
     [SerializeField] private Transform powerUpReduceSizePrefab;
     [SerializeField] private int powerUpReduceSizeSpawnMaxCount = 3;
 
+    [SerializeField] private float respawnTimerMax = 5f;
+
+    private float respawnTimer;
+
     private void Awake()
     {
         Instance = this;
@@ -20,6 +24,20 @@ public class PowerUpsManager : MonoBehaviour
         GameManager.Instance.OnCompleteLevel += HandleCompleteLevel;
     }
 
+    private void Update()
+    {
+        if (Player.Instance.HasIncreasedSize())
+        {
+            respawnTimer -= Time.deltaTime;
+
+            if (respawnTimer <= 0f)
+            {
+                SpawnPowerUps();
+                respawnTimer = respawnTimerMax;
+            }
+        }
+    }
+
     private void HandleCompleteLevel(object sender, System.EventArgs e)
     {
         DestroyAllPowerUps();
@@ -27,13 +45,18 @@ public class PowerUpsManager : MonoBehaviour
 
     private void HandleSizeIncreased(object sender, SizeSystem.OnSizeIncreasedArgs e)
     {
+        SpawnPowerUps(Random.Range(1, powerUpReduceSizeSpawnMaxCount));
+    }
+
+    private void SpawnPowerUps(int count = 1)
+    {
         Vector3 playerPosition = Player.Instance.GetPlayerPosition();
         Vector3 playerSize = Player.Instance.GetColliderSize();
 
         float minSpawnRadius = playerSize.x / 4 + 1f;
-        float maxSpawnRadius = minSpawnRadius + 3f * (1 - e.playerSize.size / 5);
+        float maxSpawnRadius = minSpawnRadius + 3f * (1 - Player.Instance.GetSizeSystem().CurrentSize.size / 5);
 
-        for(int i = 0; i < Random.Range(1, powerUpReduceSizeSpawnMaxCount); i++)
+        for(int i = 0; i < count; i++)
         {
             Vector3 spawnPosition = GenerateSpawnPosition(playerPosition, maxSpawnRadius, minSpawnRadius);
             spawnPosition = FixPositionInRange(spawnPosition, playerPosition, minSpawnRadius, maxSpawnRadius);

@@ -107,4 +107,9 @@ public class Player : MonoBehaviour
         StopCoroutine(ScalePlayer());
     }
 
+    public bool HasIncreasedSize()
+    {
+        return sizeSystem.IsExploded() || sizeSystem.CurrentSize.size > 1;
+    }
+
 }
