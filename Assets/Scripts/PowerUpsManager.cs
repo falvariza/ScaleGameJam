@@ -94,4 +94,9 @@ public class PowerUpsManager : MonoBehaviour
             Destroy(powerUp.gameObject);
         }
     }
+
+    public void ResetPowerUps()
+    {
+        DestroyAllPowerUps();
+    }
 }

@@ -194,7 +194,9 @@ public class GameManager : MonoBehaviour
         currentLevelIndex = 0;
 
         OnRestartGame?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Estamos enviando??");
+        Player.Instance.ResetPlayer();
+        LevelManager.Instance.ResetLevel();
+        PowerUpsManager.Instance.ResetPowerUps();
         StartGame();
     }
 }

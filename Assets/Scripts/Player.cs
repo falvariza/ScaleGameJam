@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private SizeSystem sizeSystem;
 
     private float playerScale;
-    private float scalingSpeed = 1f;
+    private float targetScale;
     private float scalingDuration = .5f;
 
     private void Awake()
@@ -24,15 +24,17 @@ public class Player : MonoBehaviour
 
     private void SizeSystem_OnSizeDecreased(object sender, System.EventArgs e)
     {
-        StartCoroutine(ScalePlayer(sizeSystem.CurrentSize.size));
+        targetScale = sizeSystem.CurrentSize.size;
+        StartCoroutine(ScalePlayer());
     }
 
     private void SizeSystem_OnSizeIncreased(object sender, SizeSystem.OnSizeIncreasedArgs e)
     {
-        StartCoroutine(ScalePlayer(e.playerSize.size));
+        targetScale = e.playerSize.size;
+        StartCoroutine(ScalePlayer());
     }
 
-    private IEnumerator ScalePlayer(float targetScale)
+    private IEnumerator ScalePlayer()
     {
         float timer = 0f;
         float startScale = playerScale;
@@ -41,6 +43,10 @@ public class Player : MonoBehaviour
         {
             timer += Time.deltaTime;
             playerScale = Mathf.Lerp(startScale, targetScale, timer / scalingDuration);
+            if (!GameManager.Instance.IsGamePlaying())
+            {
+                yield break;
+            }
             yield return null;
         }
 
@@ -49,17 +55,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        transform.localScale = new Vector3(playerScale, playerScale, 1);
         HandleMovement();
     }
 
     private void HandleMovement()
     {
-        if (sizeSystem.IsExploded()) return;
-        if (!GameManager.Instance.IsGamePlaying()) return;
+        if (sizeSystem.IsExploded() || !GameManager.Instance.IsGamePlaying()) return;
 
         float speed = sizeSystem.CurrentSize.speed;
-        transform.localScale = new Vector3(playerScale, playerScale, 1);
-
         transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed;
     }
 
@@ -93,6 +97,14 @@ public class Player : MonoBehaviour
     public void ResetPlayerPosition()
     {
         transform.position = Vector3.zero;
+    }
+
+    public void ResetPlayer()
+    {
+        sizeSystem.ResetSize();
+        ResetPlayerPosition();
+        playerScale = sizeSystem.CurrentSize.size;
+        StopCoroutine(ScalePlayer());
     }
 
 }

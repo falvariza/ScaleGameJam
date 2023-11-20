@@ -43,4 +43,9 @@ public class SizeSystem : MonoBehaviour
     {
         return currentSizeIndex >= playerSizes.Length;
     }
+
+    public void ResetSize()
+    {
+        currentSizeIndex = 0;
+    }
 }

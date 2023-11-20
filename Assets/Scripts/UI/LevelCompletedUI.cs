@@ -47,7 +47,6 @@ public class LevelCompletedUI : MonoBehaviour
 
     private void ShowLevelCompleted()
     {
-        Debug.Log("Lets show level completed");
         titleText.text = "Level Completed";
         levelProgressText.gameObject.SetActive(true);
         string nextLevelText = GameManager.Instance.IsFullLevelCompleted() ? "Replay" : "Next Level";
@@ -57,7 +56,6 @@ public class LevelCompletedUI : MonoBehaviour
 
     private void ShowGameOver()
     {
-        Debug.Log("Lets show game over");
         titleText.text = "Game Over";
         levelProgressText.gameObject.SetActive(false);
         nextLevelButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";
@@ -66,15 +64,12 @@ public class LevelCompletedUI : MonoBehaviour
 
     private void OnNextLevelButtonClicked()
     {
-        Debug.Log("Next level button clicked");
         if (GameManager.Instance.IsGameOver() || GameManager.Instance.IsFullLevelCompleted())
         {
-            Debug.Log("Restart game sent");
             GameManager.Instance.RestartGame();
         }
         else
         {
-            Debug.Log("Start next level");
             GameManager.Instance.StartNextLevel();
         }
     }

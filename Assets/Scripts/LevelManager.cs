@@ -123,6 +123,15 @@ public class LevelManager : MonoBehaviour
         return waveConfigurations.Length > currentWaveIndex + 1 ? waveConfigurations[currentWaveIndex + 1] : null;
     }
 
+    private void DestroyAllEnemies()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+    }
+
     public SpawnBordersCoordinates GetSpawnBordersCoordinates()
     {
         return spawnBordersCoordinates;
@@ -136,12 +145,11 @@ public class LevelManager : MonoBehaviour
         spawnTimer = GetCurrentWave().spawnInterval;
     }
 
-    private void DestroyAllEnemies()
+
+    public void ResetLevel()
     {
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
-        foreach (Enemy enemy in enemies)
-        {
-            Destroy(enemy.gameObject);
-        }
+        DestroyAllEnemies();
+        this.currentWaveIndex = 0;
+        this.levelConfiguration = null;
     }
 }
