@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         if (currentLevelIndex == fullLevelConfiguration.levelsConfigurations.Length - 1)
         {
-            PlayerProgress.IncreaseLevel();
+            GameSessionManager.Instance.IncreaseLevel();
             OnCompleteFullLevel?.Invoke(this, EventArgs.Empty);
         }
     }

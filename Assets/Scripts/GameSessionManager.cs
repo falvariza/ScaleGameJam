@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class GameSessionManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameSessionManager Instance { get; private set; }
+
+    public static int MaxFullLevelCompleted { get; private set; } = 0;
+
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            MaxFullLevelCompleted = PlayerPrefs.GetInt("MaxFullLevelCompleted", 0);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetCurrentLevel(int level)
     {
-        
+        MaxFullLevelCompleted = level;
+    }
+
+    public void IncreaseLevel()
+    {
+        MaxFullLevelCompleted++;
+        PlayerPrefs.SetInt("MaxFullLevelCompleted", MaxFullLevelCompleted);
+    }
+
+    public void ResetLevel()
+    {
+        MaxFullLevelCompleted = 0;
     }
 }

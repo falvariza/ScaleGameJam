@@ -43,7 +43,7 @@ public class LevelSelectorUI : MonoBehaviour
             levelButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Level {i + 1}";
             int levelIndex = i;
             levelButton.onClick.AddListener(() => OnLevelButtonClicked(levelIndex));
-            if (PlayerProgress.CurrentLevel >= i)
+            if (GameSessionManager.MaxFullLevelCompleted >= i)
             {
                 levelButton.interactable = true;
             }
