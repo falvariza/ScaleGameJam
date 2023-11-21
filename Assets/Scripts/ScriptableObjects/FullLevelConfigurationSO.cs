@@ -6,4 +6,6 @@ using UnityEngine;
 public class FullLevelConfigurationSO : ScriptableObject
 {
     public LevelConfigurationSO[] levelsConfigurations;
+    public SceneLoader.Scene levelScene;
+    public Color levelColor;
 }

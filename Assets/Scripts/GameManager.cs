@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private FullLevelConfigurationSO fullLevelConfiguration;
 
-
     private enum State
     {
         Idle,
@@ -97,6 +96,7 @@ public class GameManager : MonoBehaviour
 
         if (currentLevelIndex == fullLevelConfiguration.levelsConfigurations.Length - 1)
         {
+            PlayerProgress.IncreaseLevel();
             OnCompleteFullLevel?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -117,6 +117,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         countdownToStartTimer = countdownToStartTimerMax;
         UpdateState(State.CountdownToStart);
+    }
+
+    public void StartLevel(FullLevelConfigurationSO fullLevelConfigurationSO)
+    {
+        fullLevelConfiguration = fullLevelConfigurationSO;
+        currentLevelIndex = 0;
+        StartGame();
     }
 
     public void StartGame()

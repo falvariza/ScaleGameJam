@@ -14,6 +14,7 @@ public class LevelCompletedUI : MonoBehaviour
     private void Awake()
     {
         nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
+        exitButton.onClick.AddListener(OnExitButtonClicked);
     }
 
     private void Start() {
@@ -51,6 +52,8 @@ public class LevelCompletedUI : MonoBehaviour
         levelProgressText.gameObject.SetActive(true);
         string nextLevelText = GameManager.Instance.IsFullLevelCompleted() ? "Replay" : "Next Level";
         nextLevelButton.GetComponentInChildren<TextMeshProUGUI>().text = nextLevelText;
+        string exitText = GameManager.Instance.IsFullLevelCompleted() ? "Continue" : "Exit";
+        exitButton.GetComponentInChildren<TextMeshProUGUI>().text = exitText;
         gameObject.SetActive(true);
     }
 
@@ -72,5 +75,11 @@ public class LevelCompletedUI : MonoBehaviour
         {
             GameManager.Instance.StartNextLevel();
         }
+    }
+
+    private void OnExitButtonClicked()
+    {
+        MainMenuStaticData.ShowLevelSelectorUI = true;
+        SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
     }
 }
