@@ -9,8 +9,8 @@ public class SceneLoader : MonoBehaviour
     {
         MainMenuScene,
         LoadingScene,
-        Level1Scene,
-        Level2Scene,
+        SceneLevel1,
+        SceneLevel2,
     }
 
     private static Scene targetScene;

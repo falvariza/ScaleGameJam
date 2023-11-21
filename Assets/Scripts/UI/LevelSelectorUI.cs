@@ -9,6 +9,7 @@ public class LevelSelectorUI : MonoBehaviour
     public static LevelSelectorUI Instance { get; private set; }
 
     [SerializeField] private Button levelButtonTemplate;
+    [SerializeField] private Button backToMenuButton;
     [SerializeField] private Transform buttonsContainer;
 
 
@@ -19,6 +20,18 @@ public class LevelSelectorUI : MonoBehaviour
     }
 
     private void Start()
+    {
+        backToMenuButton.onClick.AddListener(OnBackToMenuButtonClicked);
+        GenerateLevelButtons();
+    }
+
+    private void OnBackToMenuButtonClicked()
+    {
+        MainMenuUI.Instance.Show();
+        Hide();
+    }
+
+    private void GenerateLevelButtons()
     {
         FullLevelConfigurationSO[] levels = LevelsSelectorManager.Instance.GetAllLevels();
 
