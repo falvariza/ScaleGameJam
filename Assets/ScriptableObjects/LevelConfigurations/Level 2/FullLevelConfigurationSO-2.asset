@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FullLevelConfigurationSO-2
   m_EditorClassIdentifier: 
   levelsConfigurations:
-  - {fileID: 11400000, guid: 9706bb8c5ad4b4bf38568f856797a524, type: 2}
-  - {fileID: 11400000, guid: b9ece29706e93446ab1c6aafb7062700, type: 2}
+  - {fileID: 11400000, guid: 506bd8c9bfbdb4e9b89bd59b26de67d1, type: 2}
+  - {fileID: 11400000, guid: a965312f1e55349e882ada37a1a0e735, type: 2}
   levelScene: 3
   levelColor: {r: 0.096466154, g: 0.2264151, b: 0.028835887, a: 0}

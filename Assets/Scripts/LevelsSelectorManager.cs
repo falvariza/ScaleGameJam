@@ -7,8 +7,7 @@ public class LevelsSelectorManager : MonoBehaviour
     public static LevelsSelectorManager Instance { get; private set; }
 
     [SerializeField] private FullLevelConfigurationSO[] levels;
-
-    private int currentLevelIndex = 0;
+    [SerializeField] private int currentLevelIndex = 0;
 
     private void Awake()
     {
@@ -26,7 +25,7 @@ public class LevelsSelectorManager : MonoBehaviour
     public void StartLevel(int levelIndex)
     {
         currentLevelIndex = levelIndex;
-        GameManager.Instance.StartLevel(levels[currentLevelIndex]);
+        SceneLoader.Load(levels[levelIndex].levelScene);
     }
 
     public FullLevelConfigurationSO[] GetAllLevels()
@@ -34,12 +33,8 @@ public class LevelsSelectorManager : MonoBehaviour
         return levels;
     }
 
-    public void LoadNextLevel()
+    public FullLevelConfigurationSO GetCurrentFullLevel()
     {
-        currentLevelIndex++;
-        if (currentLevelIndex < levels.Length)
-        {
-            SceneLoader.Load(levels[currentLevelIndex].levelScene);
-        }
+        return levels[currentLevelIndex];
     }
 }

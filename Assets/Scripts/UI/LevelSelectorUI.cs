@@ -56,7 +56,7 @@ public class LevelSelectorUI : MonoBehaviour
 
     private void OnLevelButtonClicked(int levelIndex)
     {
-        SceneLoader.Load(LevelsSelectorManager.Instance.GetAllLevels()[levelIndex].levelScene);
+        LevelsSelectorManager.Instance.StartLevel(levelIndex);
         Hide();
     }
 

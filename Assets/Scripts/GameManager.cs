@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartGame(); // Temp
+        fullLevelConfiguration = LevelsSelectorManager.Instance.GetCurrentFullLevel();
+        StartGame();
     }
 
     private void Update()
@@ -117,13 +118,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         countdownToStartTimer = countdownToStartTimerMax;
         UpdateState(State.CountdownToStart);
-    }
-
-    public void StartLevel(FullLevelConfigurationSO fullLevelConfigurationSO)
-    {
-        fullLevelConfiguration = fullLevelConfigurationSO;
-        currentLevelIndex = 0;
-        StartGame();
     }
 
     public void StartGame()

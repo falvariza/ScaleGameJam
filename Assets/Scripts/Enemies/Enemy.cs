@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxXDestroy = 20f;
     [SerializeField] private float maxYDestroy = 20f;
     [SerializeField] protected float startMovementTimerMax = .5f;
+    [SerializeField] protected bool spawnsInsideBounds = false;
 
     protected float startMovementTimer;
     protected bool hasMovementStarted;
@@ -37,6 +38,11 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public bool GetSpawnsInsideBounds()
+    {
+        return spawnsInsideBounds;
     }
 
 }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b070aa9a30dec40a3a5574d2442d2133, type: 3}
-  m_Name: LevelConfiguration 1-1
+  m_Name: LevelConfiguration 2-1
   m_EditorClassIdentifier: 
   wavesConfigurations:
-  - {fileID: 11400000, guid: 3a39a031705714c1d83ca4ea2da47e3c, type: 2}
-  - {fileID: 11400000, guid: b27a219c922d74677a0b6527f0c1f96a, type: 2}
-  - {fileID: 11400000, guid: 0599a5fa307114b248a86b08762bcae9, type: 2}
+  - {fileID: 11400000, guid: 989c9169a4b9a4314b70562f09d999bb, type: 2}
+  - {fileID: 11400000, guid: e6d756959287942b2905357d36f5ee67, type: 2}
+  - {fileID: 11400000, guid: 5971b3c58ec3d474eba9aaa3745a751c, type: 2}
   levelDuration: 20

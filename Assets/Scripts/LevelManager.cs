@@ -72,18 +72,49 @@ public class LevelManager : MonoBehaviour
 
         for (int i = 0; i < Random.Range(1, currentWave.maxNumberOfEnemiesPerSpawn); i++)
         {
-            Vector3 spawnPosition = GetRandomSpawnPosition();
             Transform enemyPrefab = currentWave.enemiesPrefabs[Random.Range(0, currentWave.enemiesPrefabs.Length)];
+            bool spawnsInsideBounds = enemyPrefab.GetComponent<Enemy>().GetSpawnsInsideBounds();
+            Vector3 spawnPosition = GetRandomSpawnPosition(spawnsInsideBounds);
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         }
     }
 
-    public void StartNextWave()
+    private void StartNextWave()
     {
         currentWaveIndex++;
     }
 
-    private Vector3 GetRandomSpawnPosition()
+    private Vector3 GetRandomSpawnPosition(bool spawnsInsideBounds)
+    {
+        if (spawnsInsideBounds)
+        {
+            return GetInsideBoundsSpawnPosition();
+        }
+        else
+        {
+            return GetOutsideBoundsSpawnPosition();
+        }
+    }
+
+    private Vector3 GetInsideBoundsSpawnPosition()
+    {
+        // get spawn position inside bounds with an offset of 2f, and that is farther than 3f from the player
+        Vector3 spawnPosition = new Vector3(
+            Random.Range(spawnBordersCoordinates.leftBorderSpawnX + 2f, spawnBordersCoordinates.rightBorderSpawnX - 2f),
+            Random.Range(spawnBordersCoordinates.bottomBorderSpawnY + 2f, spawnBordersCoordinates.topBorderSpawnY - 2f),
+            0
+        );
+
+        if (Vector3.Distance(spawnPosition, Player.Instance.transform.position) < 3f)
+        {
+            // return a position that is greater that moves the spawn position away from the player, towards the center of the screen
+            return spawnPosition + (spawnPosition - Player.Instance.transform.position).normalized * 3f;
+        }
+
+        return spawnPosition;
+    }
+
+    private Vector3 GetOutsideBoundsSpawnPosition()
     {
         SpawnPosition spawnPosition = (SpawnPosition)Random.Range(0, 4);
         float randomX, randomY;
