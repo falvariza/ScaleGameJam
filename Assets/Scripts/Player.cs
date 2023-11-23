@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,12 +13,14 @@ public class Player : MonoBehaviour
     private float playerScale;
     private float targetScale;
     private float scalingDuration = .5f;
+    private float playerInitialScale;
 
     private void Awake()
     {
         sizeSystem = GetComponent<SizeSystem>();
         Instance = this;
         playerScale = sizeSystem.CurrentSize.size;
+        playerInitialScale = transform.localScale.x;
         sizeSystem.OnSizeIncreased += SizeSystem_OnSizeIncreased;
         sizeSystem.OnSizeDecreased += SizeSystem_OnSizeDecreased;
     }
@@ -55,7 +58,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale = new Vector3(playerScale, playerScale, 1);
+        float newScale = playerInitialScale * playerScale;
+        transform.localScale = new Vector3(newScale, newScale, 1);
         HandleMovement();
     }
 
@@ -101,15 +105,33 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
+        // TODO: this can be refactored to send an event that the other components listen
         sizeSystem.ResetSize();
         ResetPlayerPosition();
         playerScale = sizeSystem.CurrentSize.size;
+        targetScale = playerScale;
+        GetBlastAttackSystem().Reset();
         StopCoroutine(ScalePlayer());
     }
 
     public bool HasIncreasedSize()
     {
         return sizeSystem.IsExploded() || sizeSystem.CurrentSize.size > 1;
+    }
+
+    public float GetActualPlayerScale()
+    {
+        return playerInitialScale * playerScale;
+    }
+
+    public float GetTargetScale()
+    {
+        return targetScale;
+    }
+
+    public BlastAttackSystem GetBlastAttackSystem()
+    {
+        return GetComponent<BlastAttackSystem>();
     }
 
 }

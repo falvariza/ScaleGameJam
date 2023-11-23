@@ -9,6 +9,8 @@ public class EnemyFollower : Enemy
     [SerializeField] private float targetFindRadius = 2f;
     [SerializeField] private float targetLeaveRadius = 3f;
 
+    [SerializeField] private bool debugMode = false;
+
     private Transform targetTransform;
 
     protected override void Awake()
@@ -45,7 +47,9 @@ public class EnemyFollower : Enemy
         hasMovementStarted = true;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
+        if (!debugMode) return;
         Gizmos.DrawSphere(transform.position, targetFindRadius);
     }
 
