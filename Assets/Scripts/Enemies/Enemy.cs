@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void HandleMovement()
     {
-        Debug.LogError("Enemy.HandleMovement() not implemented");
     }
 
     private void HandleDestroyOfflimits()

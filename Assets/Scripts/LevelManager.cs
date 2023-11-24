@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
 
-    private enum SpawnPosition
+    public enum SpawnPosition
     {
         Left,
         Right,
@@ -134,23 +134,24 @@ public class LevelManager : MonoBehaviour
     {
         SpawnPosition spawnPosition = (SpawnPosition)Random.Range(0, 4);
         float randomX, randomY;
+        float cornerOffset = 1f;
 
         switch (spawnPosition)
         {
             case SpawnPosition.Left:
                 randomX = spawnBordersCoordinates.leftBorderSpawnX;
-                randomY = Random.Range(spawnBordersCoordinates.bottomBorderSpawnY, spawnBordersCoordinates.topBorderSpawnY);
+                randomY = Random.Range(spawnBordersCoordinates.bottomBorderSpawnY + cornerOffset, spawnBordersCoordinates.topBorderSpawnY - cornerOffset);
                 break;
             case SpawnPosition.Right:
                 randomX = spawnBordersCoordinates.rightBorderSpawnX;
-                randomY = Random.Range(spawnBordersCoordinates.bottomBorderSpawnY, spawnBordersCoordinates.topBorderSpawnY);
+                randomY = Random.Range(spawnBordersCoordinates.bottomBorderSpawnY + cornerOffset, spawnBordersCoordinates.topBorderSpawnY - cornerOffset);
                 break;
             case SpawnPosition.Top:
-                randomX = Random.Range(spawnBordersCoordinates.leftBorderSpawnX, spawnBordersCoordinates.rightBorderSpawnX);
+                randomX = Random.Range(spawnBordersCoordinates.leftBorderSpawnX + cornerOffset, spawnBordersCoordinates.rightBorderSpawnX - cornerOffset);
                 randomY = spawnBordersCoordinates.topBorderSpawnY;
                 break;
             case SpawnPosition.Bottom:
-                randomX = Random.Range(spawnBordersCoordinates.leftBorderSpawnX, spawnBordersCoordinates.rightBorderSpawnX);
+                randomX = Random.Range(spawnBordersCoordinates.leftBorderSpawnX + cornerOffset, spawnBordersCoordinates.rightBorderSpawnX - cornerOffset);
                 randomY = spawnBordersCoordinates.bottomBorderSpawnY;
                 break;
             default:
