@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelConfiguration 1-2
   m_EditorClassIdentifier: 
   wavesConfigurations:
-  - {fileID: 11400000, guid: 3a39a031705714c1d83ca4ea2da47e3c, type: 2}
-  - {fileID: 11400000, guid: b27a219c922d74677a0b6527f0c1f96a, type: 2}
-  - {fileID: 11400000, guid: 0599a5fa307114b248a86b08762bcae9, type: 2}
+  - {fileID: 11400000, guid: 59b8531f88a594ad484e9f73f266aa96, type: 2}
+  - {fileID: 11400000, guid: 13777480121b94132a59a8acbbc5a979, type: 2}
+  - {fileID: 11400000, guid: 51598743b5096457483d43b14a949ea0, type: 2}
   levelDuration: 20

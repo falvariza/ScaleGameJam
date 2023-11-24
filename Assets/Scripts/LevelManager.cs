@@ -18,9 +18,7 @@ public class LevelManager : MonoBehaviour
 
     private LevelConfigurationSO levelConfiguration;
     private int currentWaveIndex = 0;
-    private float spawnTimer;
-
-    private WaveConfigurationSO[] waveConfigurations;
+    private bool isFirstWaveStarted = false;
 
     private void Awake()
     {
@@ -30,6 +28,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnCompleteLevel += HandleCompleteLevel;
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
 
     private void HandleCompleteLevel(object sender, System.EventArgs e)
@@ -41,18 +40,23 @@ public class LevelManager : MonoBehaviour
         Player.Instance.ResetPlayerPosition();
     }
 
+    private void GameManager_OnStateChanged(object sender, System.EventArgs e)
+    {
+        GameManager.State gameState = GameManager.Instance.GetState();
+        if (gameState == GameManager.State.GameOver || gameState == GameManager.State.CompletedLevel)
+        {
+            StopAllCoroutines();
+        }
+    }
+
     private void Update()
     {
         if (levelConfiguration == null) return;
 
-        spawnTimer -= Time.deltaTime;
-
-        if (spawnTimer <= 0f)
+        if (!isFirstWaveStarted)
         {
-            WaveConfigurationSO currentWave = GetCurrentWave();
-            spawnTimer += currentWave.spawnInterval;
-            SpawnWave();
-            spawnTimer = currentWave.spawnInterval + Random.Range(-currentWave.spawnIntervalRandomness, currentWave.spawnIntervalRandomness);
+            isFirstWaveStarted = true;
+            StartCurrentWave();
         }
 
         if (GetNextWave() != null && GetNextWave().waveStartingTime <= GameManager.Instance.GetTranscurringPlayingTime())
@@ -61,27 +65,39 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void SpawnWave()
+    private IEnumerator StartEnemyWave(WaveConfigurationSO.EnemyWaveConfiguration enemyWaveConfiguration)
     {
-        if (GameManager.Instance.IsGameOver())
+        while (GameManager.Instance.IsGamePlaying())
         {
-            return;
+            for (int i = 0; i <  Random.Range(1, enemyWaveConfiguration.maxNumberOfEnemiesPerSpawn); i++)
+            {
+                Transform enemyPrefab = enemyWaveConfiguration.enemiesPrefabs[Random.Range(0, enemyWaveConfiguration.enemiesPrefabs.Length)];
+                bool spawnsInsideBounds = enemyPrefab.GetComponent<Enemy>().GetSpawnsInsideBounds();
+                Vector3 spawnPosition = GetRandomSpawnPosition(spawnsInsideBounds);
+                Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            }
+            float spawnTimer = enemyWaveConfiguration.spawnInterval + Random.Range(-enemyWaveConfiguration.spawnIntervalRandomness, enemyWaveConfiguration.spawnIntervalRandomness);
+            yield return new WaitForSeconds(spawnTimer);
         }
 
-        WaveConfigurationSO currentWave = GetCurrentWave();
+        yield break;
+    }
 
-        for (int i = 0; i < Random.Range(1, currentWave.maxNumberOfEnemiesPerSpawn); i++)
+    private void StartCurrentWave()
+    {
+        WaveConfigurationSO.EnemyWaveConfiguration[] enemyWaveConfigurations = GetCurrentWave().enemiesWaveConfigurations;
+
+        foreach (WaveConfigurationSO.EnemyWaveConfiguration enemyWaveConfiguration in enemyWaveConfigurations)
         {
-            Transform enemyPrefab = currentWave.enemiesPrefabs[Random.Range(0, currentWave.enemiesPrefabs.Length)];
-            bool spawnsInsideBounds = enemyPrefab.GetComponent<Enemy>().GetSpawnsInsideBounds();
-            Vector3 spawnPosition = GetRandomSpawnPosition(spawnsInsideBounds);
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            StartCoroutine(StartEnemyWave(enemyWaveConfiguration));
         }
     }
 
     private void StartNextWave()
     {
         currentWaveIndex++;
+        StopAllCoroutines();
+        StartCurrentWave();
     }
 
     private Vector3 GetRandomSpawnPosition(bool spawnsInsideBounds)
@@ -146,12 +162,12 @@ public class LevelManager : MonoBehaviour
 
     private WaveConfigurationSO GetCurrentWave()
     {
-        return waveConfigurations.Length > currentWaveIndex ? waveConfigurations[currentWaveIndex] : null;
+        return GetWaveConfiguration().Length > currentWaveIndex ? GetWaveConfiguration()[currentWaveIndex] : null;
     }
 
     private WaveConfigurationSO GetNextWave()
     {
-        return waveConfigurations.Length > currentWaveIndex + 1 ? waveConfigurations[currentWaveIndex + 1] : null;
+        return GetWaveConfiguration().Length > currentWaveIndex + 1 ? GetWaveConfiguration()[currentWaveIndex + 1] : null;
     }
 
     private void DestroyAllEnemies()
@@ -163,6 +179,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private WaveConfigurationSO[] GetWaveConfiguration()
+    {
+        if (levelConfiguration == null) return null;
+        return levelConfiguration.wavesConfigurations;
+    }
+
     public SpawnBordersCoordinates GetSpawnBordersCoordinates()
     {
         return spawnBordersCoordinates;
@@ -172,8 +194,7 @@ public class LevelManager : MonoBehaviour
     {
         this.levelConfiguration = levelConfiguration;
         this.currentWaveIndex = 0;
-        waveConfigurations = levelConfiguration.wavesConfigurations;
-        spawnTimer = GetCurrentWave().spawnInterval;
+        this.isFirstWaveStarted = false;
     }
 
 
@@ -182,5 +203,6 @@ public class LevelManager : MonoBehaviour
         DestroyAllEnemies();
         this.currentWaveIndex = 0;
         this.levelConfiguration = null;
+        this.isFirstWaveStarted = false;
     }
 }

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private FullLevelConfigurationSO fullLevelConfiguration;
 
-    private enum State
+    public enum State
     {
         Idle,
         CountdownToStart,
@@ -199,5 +199,10 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.ResetLevel();
         PowerUpsManager.Instance.ResetPowerUps();
         StartGame();
+    }
+
+    public State GetState()
+    {
+        return gameState;
     }
 }
