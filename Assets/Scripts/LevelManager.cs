@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
         GameManager.State gameState = GameManager.Instance.GetState();
         if (gameState == GameManager.State.GameOver || gameState == GameManager.State.CompletedLevel)
         {
-            StopAllCoroutines();
+            StopWaves();
         }
     }
 
@@ -69,7 +69,7 @@ public class LevelManager : MonoBehaviour
     {
         while (GameManager.Instance.IsGamePlaying())
         {
-            for (int i = 0; i <  Random.Range(1, enemyWaveConfiguration.maxNumberOfEnemiesPerSpawn); i++)
+            for (int i = 0; i < Random.Range(1, enemyWaveConfiguration.maxNumberOfEnemiesPerSpawn); i++)
             {
                 Transform enemyPrefab = enemyWaveConfiguration.enemiesPrefabs[Random.Range(0, enemyWaveConfiguration.enemiesPrefabs.Length)];
                 bool spawnsInsideBounds = enemyPrefab.GetComponent<Enemy>().GetSpawnsInsideBounds();
@@ -90,13 +90,15 @@ public class LevelManager : MonoBehaviour
         foreach (WaveConfigurationSO.EnemyWaveConfiguration enemyWaveConfiguration in enemyWaveConfigurations)
         {
             StartCoroutine(StartEnemyWave(enemyWaveConfiguration));
+            PowerUpsManager.Instance.StartPowerUpWave(GetCurrentWave().powerUpsWaveConfigurations);
         }
     }
 
     private void StartNextWave()
     {
         currentWaveIndex++;
-        StopAllCoroutines();
+        StopWaves();
+
         StartCurrentWave();
     }
 
@@ -184,6 +186,12 @@ public class LevelManager : MonoBehaviour
     {
         if (levelConfiguration == null) return null;
         return levelConfiguration.wavesConfigurations;
+    }
+
+    private void StopWaves()
+    {
+        StopAllCoroutines();
+        PowerUpsManager.Instance.StopPowerUpWave();
     }
 
     public SpawnBordersCoordinates GetSpawnBordersCoordinates()

@@ -8,10 +8,12 @@ public class PowerUp : MonoBehaviour
     [SerializeField] protected SpriteRenderer powerUpVisual;
     [SerializeField] protected bool shouldDestroyAfterTimeout;
     [SerializeField] protected float destroyTimeout;
+    [SerializeField] protected float powerUpDuration;
 
     // public GameObject specialEffect;
     // public AudioClip soundEffect;
 
+    protected Player player;
 
     protected enum PowerUpState
     {
@@ -20,7 +22,6 @@ public class PowerUp : MonoBehaviour
         IsExpiring
     }
 
-    protected SizeSystem playerSizeSystem;
     protected PowerUpState powerUpState;
 
     protected virtual void Start()
@@ -35,7 +36,7 @@ public class PowerUp : MonoBehaviour
 
     protected virtual void HandleSelfDestruction()
     {
-        if(!shouldDestroyAfterTimeout)
+        if(!shouldDestroyAfterTimeout || powerUpState == PowerUpState.IsCollected)
         {
             return;
         }
@@ -55,7 +56,7 @@ public class PowerUp : MonoBehaviour
 
     protected virtual void PowerUpCollected(GameObject gameObjectCollectingPowerUp)
     {
-        Player player = gameObjectCollectingPowerUp.GetComponent<Player>();
+        player = gameObjectCollectingPowerUp.GetComponent<Player>();
 
         if(player == null)
         {
@@ -70,13 +71,10 @@ public class PowerUp : MonoBehaviour
 
         powerUpState = PowerUpState.IsCollected;
 
-        // We must have been collected by a player, store handle to player for later use
-        playerSizeSystem = player.GetComponent<SizeSystem>();
-
         // We move the power up game object to be under the player that collect it, this isn't essential for functionality
         // presented so far, but it is neater in the gameObject hierarchy
-        gameObject.transform.parent = playerSizeSystem.gameObject.transform;
-        gameObject.transform.position = playerSizeSystem.gameObject.transform.position;
+        gameObject.transform.parent = player.gameObject.transform;
+        gameObject.transform.position = player.gameObject.transform.position;
 
         // Collection effects
         PowerUpEffects();

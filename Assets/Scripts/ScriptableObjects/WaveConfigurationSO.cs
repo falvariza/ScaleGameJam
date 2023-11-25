@@ -14,6 +14,16 @@ public class WaveConfigurationSO : ScriptableObject
         public float spawnIntervalRandomness;
     }
 
+    [System.Serializable]
+    public struct PowerUpWaveConfiguration
+    {
+        public Transform[] powerUpsPrefabs;
+        public int maxNumberOfPowerUpsPerSpawn;
+        public float spawnInterval;
+        public float spawnIntervalRandomness;
+    }
+
     public EnemyWaveConfiguration[] enemiesWaveConfigurations;
+    public PowerUpWaveConfiguration[] powerUpsWaveConfigurations;
     public float waveStartingTime;
 }

@@ -12,6 +12,7 @@ public class PowerUpsManager : MonoBehaviour
     [SerializeField] private float respawnTimerMax = 5f;
 
     private float respawnTimer;
+    private WaveConfigurationSO.PowerUpWaveConfiguration[] powerUpsWaveConfigurations;
 
     private void Awake()
     {
@@ -50,22 +51,22 @@ public class PowerUpsManager : MonoBehaviour
 
     private void SpawnPowerUps(int count = 1)
     {
+
+        for(int i = 0; i < count; i++)
+        {
+            Vector3 spawnPosition = GenerateSpawnPosition();
+            Instantiate(powerUpReduceSizePrefab, spawnPosition, Quaternion.identity);
+        }
+    }
+
+    private Vector3 GenerateSpawnPosition()
+    {
         Vector3 playerPosition = Player.Instance.GetPlayerPosition();
         Vector3 playerSize = Player.Instance.GetColliderSize();
 
         float minSpawnRadius = playerSize.x / 4 + 1f;
         float maxSpawnRadius = minSpawnRadius + 3f * (1 - Player.Instance.GetSizeSystem().CurrentSize.size / 5);
 
-        for(int i = 0; i < count; i++)
-        {
-            Vector3 spawnPosition = GenerateSpawnPosition(playerPosition, maxSpawnRadius, minSpawnRadius);
-            spawnPosition = FixPositionInRange(spawnPosition, playerPosition, minSpawnRadius, maxSpawnRadius);
-            Instantiate(powerUpReduceSizePrefab, spawnPosition, Quaternion.identity);
-        }
-    }
-
-    private Vector3 GenerateSpawnPosition(Vector3 playerPosition, float maxSpawnRadius, float minSpawnRadius)
-    {
         // Calculate a random angle in radians
         float randomAngle = Random.Range(0f, 2f * Mathf.PI);
         // Calculate a random distance within the specified range
@@ -77,7 +78,7 @@ public class PowerUpsManager : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0);
 
-        return spawnPosition;
+        return FixPositionInRange(spawnPosition, playerPosition, minSpawnRadius, maxSpawnRadius);
     }
 
     private Vector3 FixPositionInRange(Vector3 position, Vector3 playerPosition, float minSpawnRadius, float maxSpawnRadius)
@@ -118,8 +119,38 @@ public class PowerUpsManager : MonoBehaviour
         }
     }
 
+    private IEnumerator SpawnPowerUpWave(WaveConfigurationSO.PowerUpWaveConfiguration powerUpWaveConfiguration)
+    {
+        while (GameManager.Instance.IsGamePlaying())
+        {
+            for (int i = 0; i < powerUpWaveConfiguration.maxNumberOfPowerUpsPerSpawn; i++)
+            {
+                Transform powerUpPrefab = powerUpWaveConfiguration.powerUpsPrefabs[Random.Range(0, powerUpWaveConfiguration.powerUpsPrefabs.Length)];
+                Vector3 spawnPosition = GenerateSpawnPosition();
+                Instantiate(powerUpPrefab, spawnPosition, Quaternion.identity);
+            }
+            yield return new WaitForSeconds(powerUpWaveConfiguration.spawnInterval);
+        }
+        yield break;
+    }
+
     public void ResetPowerUps()
     {
         DestroyAllPowerUps();
+    }
+
+    public void StartPowerUpWave(WaveConfigurationSO.PowerUpWaveConfiguration[] powerUpsWaveConfigurations)
+    {
+        this.powerUpsWaveConfigurations = powerUpsWaveConfigurations;
+
+        foreach (WaveConfigurationSO.PowerUpWaveConfiguration powerUpWaveConfiguration in powerUpsWaveConfigurations)
+        {
+            StartCoroutine(SpawnPowerUpWave(powerUpWaveConfiguration));
+        }
+    }
+
+    public void StopPowerUpWave()
+    {
+        StopAllCoroutines();
     }
 }

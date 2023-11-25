@@ -24,4 +24,10 @@ MonoBehaviour:
     maxNumberOfEnemiesPerSpawn: 2
     spawnInterval: 3
     spawnIntervalRandomness: 0.5
+  powerUpsWaveConfigurations:
+  - powerUpsPrefabs:
+    - {fileID: 8416990992251574313, guid: 562fb2987d08e40958d128d47c57daca, type: 3}
+    maxNumberOfPowerUpsPerSpawn: 1
+    spawnInterval: 5
+    spawnIntervalRandomness: 1
   waveStartingTime: 10

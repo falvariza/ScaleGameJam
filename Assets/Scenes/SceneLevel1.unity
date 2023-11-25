@@ -181,8 +181,8 @@ SpriteRenderer:
   m_SortingLayerID: 1974326019
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f37a7c49a36a7491ea995f3b0e457956, type: 3}
-  m_Color: {r: 0.0529103, g: 0.38679248, b: 0.093117505, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d54d542ab2b3a4ef99609f7ceba8e6f1, type: 3}
+  m_Color: {r: 0.028969381, g: 0.2924528, b: 0.06267077, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -200,8 +200,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 540444657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.699269, y: 2.6839926, z: 0.29747543}
+  m_LocalPosition: {x: -0.1712, y: 0.1137, z: 0}
+  m_LocalScale: {x: 0.3739783, y: 0.45256686, z: 0.06505788}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -986,7 +986,8 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6514588614422077099, guid: 15809d9423bb74431b092083a2686293, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15809d9423bb74431b092083a2686293, type: 3}
@@ -1111,6 +1112,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2962239748962040838, guid: 3b16d5ffe4fde44a4bde6319650ef02a, type: 3}
+      propertyPath: powerUpReduceSizePrefab
+      value: 
+      objectReference: {fileID: 8416990992251574313, guid: 90307cf9203a346a3bda749c18c9cd4a, type: 3}
     - target: {fileID: 4883415003697175688, guid: 3b16d5ffe4fde44a4bde6319650ef02a, type: 3}
       propertyPath: m_RootOrder
       value: 1
