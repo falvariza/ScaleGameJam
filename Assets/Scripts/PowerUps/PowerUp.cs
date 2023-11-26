@@ -19,6 +19,7 @@ public class PowerUp : MonoBehaviour
     {
         InAttractMode,
         IsCollected,
+        IsActive,
         IsExpiring
     }
 
@@ -31,21 +32,34 @@ public class PowerUp : MonoBehaviour
 
     protected virtual void Update()
     {
-        HandleSelfDestruction();
+        switch (powerUpState)
+        {
+            case PowerUpState.InAttractMode:
+                HandleInAttractMode();
+                break;
+            case PowerUpState.IsActive:
+                powerUpDuration -= Time.deltaTime;
+                if(powerUpDuration <= 0f)
+                {
+                    PowerUpHasExpired();
+                }
+                break;
+        }
     }
 
-    protected virtual void HandleSelfDestruction()
+    protected virtual void HandleInAttractMode()
     {
-        if(!shouldDestroyAfterTimeout || powerUpState == PowerUpState.IsCollected)
+        if(!shouldDestroyAfterTimeout || powerUpState != PowerUpState.InAttractMode)
         {
             return;
         }
 
         destroyTimeout -= Time.deltaTime;
 
-        if(destroyTimeout <= 0f)
+        if(destroyTimeout <= 0f && player == null)
         {
-            Destroy(gameObject);
+            powerUpVisual.enabled = false;
+            DestroySelfAfterDelay();
         }
     }
 
@@ -79,6 +93,7 @@ public class PowerUp : MonoBehaviour
         // Collection effects
         PowerUpEffects();
 
+        powerUpVisual.enabled = false;
         // Payload
         PowerUpAction();
 
@@ -87,9 +102,6 @@ public class PowerUp : MonoBehaviour
         // {
         //     ExecuteEvents.Execute<IPowerUpEvents>(go, null,(x, y) => x.OnPowerUpCollected(this, playerSizeSystem));
         // }
-
-        // Now the power up visuals can go away
-        powerUpVisual.enabled = false;
     }
 
     protected virtual void PowerUpEffects()
@@ -107,12 +119,14 @@ public class PowerUp : MonoBehaviour
 
     protected virtual void PowerUpAction()
     {
-        // Debug.Log("Power Up collected, issuing payload for: " + gameObject.name);
-
-        // If we're instant use we also expire self immediately
         if(expiresImmediately)
         {
             PowerUpHasExpired();
+        }
+
+        if (powerUpDuration > 0f)
+        {
+            powerUpState = PowerUpState.IsActive;
         }
     }
 
@@ -129,7 +143,6 @@ public class PowerUp : MonoBehaviour
         // {
         //     ExecuteEvents.Execute<IPowerUpEvents>(go, null,(x, y) => x.OnPowerUpExpired(this, playerSizeSystem));
         // }
-        // Debug.Log("Power Up has expired, removing after a delay for: " + gameObject.name);
         DestroySelfAfterDelay();
     }
 
@@ -137,6 +150,6 @@ public class PowerUp : MonoBehaviour
     {
         // Arbitrary delay of some seconds to allow particle, audio is all done
         // TODO could tighten this and inspect the sfx? Hard to know how many, as subclasses could have spawned their own
-        Destroy(gameObject, 10f);
+        Destroy(gameObject);
     }
 }

@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
     {
         if (sizeSystem.IsExploded() || !GameManager.Instance.IsGamePlaying()) return;
 
-        float speed = sizeSystem.CurrentSize.speed;
+        float speed = sizeSystem.GetSpeed();
         transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed;
     }
 
