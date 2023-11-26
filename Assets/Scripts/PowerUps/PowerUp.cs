@@ -70,18 +70,19 @@ public class PowerUp : MonoBehaviour
 
     protected virtual void PowerUpCollected(GameObject gameObjectCollectingPowerUp)
     {
-        player = gameObjectCollectingPowerUp.GetComponent<Player>();
-
-        if(player == null)
-        {
-            return;
-        }
-
         // We only care if we've not been collected before
         if(powerUpState == PowerUpState.IsCollected || powerUpState == PowerUpState.IsExpiring)
         {
             return;
         }
+
+        Player collectingPlayer = gameObjectCollectingPowerUp.GetComponent<Player>();
+
+        if(collectingPlayer == null)
+        {
+            return;
+        }
+        player = collectingPlayer;
 
         powerUpState = PowerUpState.IsCollected;
 

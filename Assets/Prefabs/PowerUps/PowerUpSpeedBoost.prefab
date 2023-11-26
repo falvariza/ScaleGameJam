@@ -83,9 +83,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expiresImmediately: 0
   powerUpVisual: {fileID: 9153325253682758633}
-  shouldDestroyAfterTimeout: 1
-  destroyTimeout: 3
-  powerUpDuration: 4
+  shouldDestroyAfterTimeout: 0
+  destroyTimeout: 0
+  powerUpDuration: 2
   speedBoostMultiplier: 0.5
 --- !u!1 &4867845099015952661
 GameObject:
