@@ -134,4 +134,9 @@ public class Player : MonoBehaviour
         return GetComponent<BlastAttackSystem>();
     }
 
+    public int GetPlayerLife()
+    {
+        return sizeSystem.GetLife();
+    }
+
 }

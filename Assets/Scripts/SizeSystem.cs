@@ -76,4 +76,9 @@ public class SizeSystem : MonoBehaviour
 
         return CurrentSize.speed * boost;
     }
+
+    public int GetLife()
+    {
+        return playerSizes.Length - currentSizeIndex;
+    }
 }
