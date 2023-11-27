@@ -12,6 +12,12 @@ public class PowerUpShield : PowerUp
     {
         base.PowerUpAction();
 
+        foreach (Shield existingShield in player.GetComponentsInChildren<Shield>())
+        {
+            existingShield.gameObject.SetActive(false);
+            Destroy(existingShield.gameObject);
+        }
+
         shield = Instantiate(shieldPrefab, player.transform.position, Quaternion.identity);
         shield.SetParent(player.transform);
         shield.localPosition = Vector3.zero;

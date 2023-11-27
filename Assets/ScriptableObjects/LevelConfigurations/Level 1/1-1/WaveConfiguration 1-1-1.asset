@@ -15,7 +15,13 @@ MonoBehaviour:
   enemiesWaveConfigurations:
   - enemiesPrefabs:
     - {fileID: 9087014262292972874, guid: 7582f80d846ac43e29e25dc1c906759a, type: 3}
-    maxNumberOfEnemiesPerSpawn: 4
-    spawnInterval: 1
+    maxNumberOfEnemiesPerSpawn: 1
+    spawnInterval: 5
     spawnIntervalRandomness: 0.5
+  powerUpsWaveConfigurations:
+  - powerUpsPrefabs:
+    - {fileID: 8416990992251574313, guid: f25418b453f8c41a5b0b9724474b021c, type: 3}
+    maxNumberOfPowerUpsPerSpawn: 2
+    spawnInterval: 3
+    spawnIntervalRandomness: 1
   waveStartingTime: 0
