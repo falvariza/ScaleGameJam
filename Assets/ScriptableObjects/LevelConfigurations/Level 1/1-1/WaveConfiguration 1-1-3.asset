@@ -25,9 +25,9 @@ MonoBehaviour:
     spawnInterval: 5
     spawnIntervalRandomness: 0.5
   powerUpsWaveConfigurations:
-  - powerUpsPrefabs:
-    - {fileID: 8416990992251574313, guid: 562fb2987d08e40958d128d47c57daca, type: 3}
-    - {fileID: 8416990992251574313, guid: 86c7b254c90124ec7882975d53fbb7ca, type: 3}
+  - powerUps:
+    - {fileID: 11400000, guid: 04faf0f49eab8436ca7b5f67776ac86b, type: 2}
+    - {fileID: 11400000, guid: 6ccaf9a3679464b5a9ec29324409df47, type: 2}
     maxNumberOfPowerUpsPerSpawn: 1
     spawnInterval: 5
     spawnIntervalRandomness: 1
