@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpReduceSizePrefab: {fileID: 8416990992251574313, guid: 90307cf9203a346a3bda749c18c9cd4a, type: 3}
-  powerUpReduceSizeSpawnMaxCount: 3
-  respawnTimerMax: 5
+  powerUpReduceSizeSpawnMaxCount: 2
+  respawnPowerUpReduceSizeTimerMax: 4
 --- !u!1 &6122269513757635058
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,5 +173,5 @@ Transform:
   - {fileID: 6964633121985908246}
   - {fileID: 6466244345769919646}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

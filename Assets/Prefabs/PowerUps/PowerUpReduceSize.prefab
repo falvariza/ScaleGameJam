@@ -84,7 +84,8 @@ MonoBehaviour:
   expiresImmediately: 1
   powerUpVisual: {fileID: 9153325253682758633}
   shouldDestroyAfterTimeout: 1
-  destroyTimeout: 3
+  destroyTimeout: 2
+  powerUpDuration: 0
 --- !u!1 &4867845099015952661
 GameObject:
   m_ObjectHideFlags: 0

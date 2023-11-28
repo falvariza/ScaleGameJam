@@ -15,5 +15,8 @@ MonoBehaviour:
   levelsConfigurations:
   - {fileID: 11400000, guid: 9706bb8c5ad4b4bf38568f856797a524, type: 2}
   - {fileID: 11400000, guid: b9ece29706e93446ab1c6aafb7062700, type: 2}
+  - {fileID: 11400000, guid: a01379bc1c1d04617b1f898c6bf68ee5, type: 2}
+  - {fileID: 11400000, guid: 838e106d25010427ca1484c76b311d08, type: 2}
+  - {fileID: 11400000, guid: 3f9d570696fa74a82837c97fb0483230, type: 2}
   levelScene: 2
   levelColor: {r: 0.2264151, g: 0.02669989, b: 0.045995533, a: 0}

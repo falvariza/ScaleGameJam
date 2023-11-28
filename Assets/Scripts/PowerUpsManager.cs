@@ -10,9 +10,9 @@ public class PowerUpsManager : MonoBehaviour
     [SerializeField] private Transform powerUpReduceSizePrefab;
     [SerializeField] private int powerUpReduceSizeSpawnMaxCount = 3;
 
-    [SerializeField] private float respawnTimerMax = 5f;
+    [SerializeField] private float respawnPowerUpReduceSizeTimerMax = 5f;
 
-    private float respawnTimer;
+    private float respawnPowerUpReduceSizeTimer;
     private WaveConfigurationSO.PowerUpWaveConfiguration[] powerUpsWaveConfigurations;
     private Dictionary<PowerUpSO, float> activePowerUpsDurationDictionary = new Dictionary<PowerUpSO, float>();
 
@@ -31,12 +31,13 @@ public class PowerUpsManager : MonoBehaviour
     {
         if (Player.Instance.HasIncreasedSize())
         {
-            respawnTimer -= Time.deltaTime;
+            respawnPowerUpReduceSizeTimer -= Time.deltaTime;
 
-            if (respawnTimer <= 0f)
+            if (respawnPowerUpReduceSizeTimer <= 0f)
             {
-                SpawnReduceSizePowerUps();
-                respawnTimer = respawnTimerMax;
+                int powerUpCount = 1 + (int)(Player.Instance.GetSizeSystem().CurrentSize.size / 5) * 2;
+                SpawnReduceSizePowerUps(powerUpCount);
+                respawnPowerUpReduceSizeTimer = respawnPowerUpReduceSizeTimerMax + 1 * (1 - Player.Instance.GetSizeSystem().CurrentSize.size / 5);
             }
         }
 
@@ -91,7 +92,7 @@ public class PowerUpsManager : MonoBehaviour
         Vector3 playerSize = Player.Instance.GetColliderSize();
 
         float minSpawnRadius = playerSize.x / 4 + 1f;
-        float maxSpawnRadius = minSpawnRadius + 3f * (1 - Player.Instance.GetSizeSystem().CurrentSize.size / 5);
+        float maxSpawnRadius = minSpawnRadius + 4f * (1 - Player.Instance.GetSizeSystem().CurrentSize.size / 5);
 
         // Calculate a random angle in radians
         float randomAngle = Random.Range(0f, 2f * Mathf.PI);
