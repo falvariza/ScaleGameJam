@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
+    public EventHandler OnExpandingSizeStarted;
+    public EventHandler OnExpandingSizeFinished;
+
     private SizeSystem sizeSystem;
 
     private float playerScale;
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour
 
     private void SizeSystem_OnSizeIncreased(object sender, SizeSystem.OnSizeIncreasedArgs e)
     {
+        OnExpandingSizeStarted?.Invoke(this, EventArgs.Empty);
         targetScale = e.playerSize.size;
         StartCoroutine(ScalePlayer());
     }
@@ -41,6 +45,7 @@ public class Player : MonoBehaviour
     {
         float timer = 0f;
         float startScale = playerScale;
+        bool isExpanding = targetScale > startScale;
 
         while (timer < scalingDuration)
         {
@@ -54,6 +59,11 @@ public class Player : MonoBehaviour
         }
 
         playerScale = targetScale;
+
+        if (isExpanding)
+        {
+            OnExpandingSizeFinished?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void Update()

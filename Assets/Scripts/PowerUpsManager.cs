@@ -6,6 +6,8 @@ public class PowerUpsManager : MonoBehaviour
 {
     public static PowerUpsManager Instance { get; private set; }
 
+    public static List<PowerUpSO> activePowerUps = new List<PowerUpSO>();
+
     [SerializeField] private Transform powerUpReduceSizePrefab;
     [SerializeField] private int powerUpReduceSizeSpawnMaxCount = 3;
 
@@ -125,7 +127,7 @@ public class PowerUpsManager : MonoBehaviour
         {
             for (int i = 0; i < powerUpWaveConfiguration.maxNumberOfPowerUpsPerSpawn; i++)
             {
-                Transform powerUpPrefab = powerUpWaveConfiguration.powerUpsPrefabs[Random.Range(0, powerUpWaveConfiguration.powerUpsPrefabs.Length)];
+                Transform powerUpPrefab = powerUpWaveConfiguration.powerUps[Random.Range(0, powerUpWaveConfiguration.powerUps.Length)].powerUpPrefab;
                 Vector3 spawnPosition = GenerateSpawnPosition();
                 Instantiate(powerUpPrefab, spawnPosition, Quaternion.identity);
             }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8dc61ca073943d699ae9dd48875d00, type: 3}
+  m_Name: PowerUpShield
+  m_EditorClassIdentifier: 
+  powerUpPrefab: {fileID: 8416990992251574313, guid: 562fb2987d08e40958d128d47c57daca, type: 3}
+  powerUpName: Power Up Shield
+  powerUpIcon: {fileID: 0}
