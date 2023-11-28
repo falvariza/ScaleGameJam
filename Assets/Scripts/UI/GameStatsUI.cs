@@ -9,11 +9,19 @@ public class GameStatsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Transform livesContainer;
     [SerializeField] private Image lifeImagePrefab;
+    [SerializeField] private Transform powerUpContainer;
+    [SerializeField] private Transform powerUpItemTemplate;
+
+    private void Start()
+    {
+        powerUpItemTemplate.gameObject.SetActive(false);
+    }
 
     private void Update()
     {
         countdownText.text = GameManager.Instance.GetGamePlayingCountdownInSeconds().ToString();
         ShowLives();
+        // ShowPowerUps();1
     }
 
     private void ShowLives()
@@ -35,6 +43,29 @@ public class GameStatsUI : MonoBehaviour
             {
                 Destroy(livesContainer.GetChild(i).gameObject);
             }
+        }
+    }
+
+    private void ShowPowerUps()
+    {
+        Dictionary<PowerUpSO, float> activePowerUps = PowerUpsManager.Instance.GetActivePowerUps();
+
+        // destroy all children of powerUpContainer
+        foreach (Transform child in powerUpContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (KeyValuePair<PowerUpSO, float> activePowerUp in activePowerUps)
+        {
+            Transform powerUpItemTransform = Instantiate(powerUpItemTemplate, powerUpContainer);
+            powerUpItemTransform.gameObject.SetActive(true);
+
+            Image powerUpImage = powerUpItemTransform.Find("Image").GetComponent<Image>();
+            powerUpImage.sprite = activePowerUp.Key.powerUpIcon;
+
+            TextMeshProUGUI powerUpDurationText = powerUpItemTransform.Find("Duration").GetComponent<TextMeshProUGUI>();
+            powerUpDurationText.text = activePowerUp.Value.ToString("F1");
         }
     }
 }

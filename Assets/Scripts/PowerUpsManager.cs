@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerUpsManager : MonoBehaviour
 {
     public static PowerUpsManager Instance { get; private set; }
-
-    public static List<PowerUpSO> activePowerUps = new List<PowerUpSO>();
 
     [SerializeField] private Transform powerUpReduceSizePrefab;
     [SerializeField] private int powerUpReduceSizeSpawnMaxCount = 3;
@@ -15,6 +14,7 @@ public class PowerUpsManager : MonoBehaviour
 
     private float respawnTimer;
     private WaveConfigurationSO.PowerUpWaveConfiguration[] powerUpsWaveConfigurations;
+    private Dictionary<PowerUpSO, float> activePowerUpsDurationDictionary = new Dictionary<PowerUpSO, float>();
 
     private void Awake()
     {
@@ -35,9 +35,33 @@ public class PowerUpsManager : MonoBehaviour
 
             if (respawnTimer <= 0f)
             {
-                SpawnPowerUps();
+                SpawnReduceSizePowerUps();
                 respawnTimer = respawnTimerMax;
             }
+        }
+
+        // HandleActivePowerUps();
+    }
+
+    private void HandleActivePowerUps()
+    {
+        List<PowerUpSO> powerUpsToRemove = new List<PowerUpSO>();
+
+        foreach (KeyValuePair<PowerUpSO, float> activePowerUp in activePowerUpsDurationDictionary)
+        {
+            float duration = activePowerUp.Value - Time.deltaTime;
+
+            activePowerUpsDurationDictionary[activePowerUp.Key] = duration;
+
+            if (activePowerUp.Value <= 0f)
+            {
+                powerUpsToRemove.Add(activePowerUp.Key);
+            }
+        }
+
+        foreach (PowerUpSO powerUpToRemove in powerUpsToRemove)
+        {
+            activePowerUpsDurationDictionary.Remove(powerUpToRemove);
         }
     }
 
@@ -48,10 +72,10 @@ public class PowerUpsManager : MonoBehaviour
 
     private void HandleSizeIncreased(object sender, SizeSystem.OnSizeIncreasedArgs e)
     {
-        SpawnPowerUps(Random.Range(1, powerUpReduceSizeSpawnMaxCount));
+        SpawnReduceSizePowerUps(Random.Range(1, powerUpReduceSizeSpawnMaxCount));
     }
 
-    private void SpawnPowerUps(int count = 1)
+    private void SpawnReduceSizePowerUps(int count = 1)
     {
 
         for(int i = 0; i < count; i++)
@@ -127,13 +151,33 @@ public class PowerUpsManager : MonoBehaviour
         {
             for (int i = 0; i < powerUpWaveConfiguration.maxNumberOfPowerUpsPerSpawn; i++)
             {
-                Transform powerUpPrefab = powerUpWaveConfiguration.powerUps[Random.Range(0, powerUpWaveConfiguration.powerUps.Length)].powerUpPrefab;
+                PowerUpSO powerUpSO = powerUpWaveConfiguration.powerUps[Random.Range(0, powerUpWaveConfiguration.powerUps.Length)];
+                Transform powerUpPrefab = powerUpSO.powerUpPrefab;
+
                 Vector3 spawnPosition = GenerateSpawnPosition();
                 Instantiate(powerUpPrefab, spawnPosition, Quaternion.identity);
+
+                // float powerUpDuration = powerUpPrefab.GetComponent<PowerUp>().GetPowerUpDuration();
+                // if (powerUpDuration > 0f)
+                // {
+                //     AddActivePowerUp(powerUpSO, powerUpDuration);
+                // }
             }
             yield return new WaitForSeconds(powerUpWaveConfiguration.spawnInterval);
         }
         yield break;
+    }
+
+    private void AddActivePowerUp(PowerUpSO powerUpSO, float duration)
+    {
+        if (activePowerUpsDurationDictionary.ContainsKey(powerUpSO))
+        {
+            activePowerUpsDurationDictionary[powerUpSO] = duration;
+        }
+        else
+        {
+            activePowerUpsDurationDictionary.Add(powerUpSO, duration);
+        }
     }
 
     public void ResetPowerUps()
@@ -141,9 +185,9 @@ public class PowerUpsManager : MonoBehaviour
         DestroyAllPowerUps();
     }
 
-    public void StartPowerUpWave(WaveConfigurationSO.PowerUpWaveConfiguration[] powerUpsWaveConfigurations)
+    public void StartPowerUpWave(WaveConfigurationSO.PowerUpWaveConfiguration[] powerUpsWaveConfigs)
     {
-        this.powerUpsWaveConfigurations = powerUpsWaveConfigurations;
+        this.powerUpsWaveConfigurations = powerUpsWaveConfigs;
 
         foreach (WaveConfigurationSO.PowerUpWaveConfiguration powerUpWaveConfiguration in powerUpsWaveConfigurations)
         {
@@ -155,4 +199,10 @@ public class PowerUpsManager : MonoBehaviour
     {
         StopAllCoroutines();
     }
+
+    public Dictionary<PowerUpSO, float> GetActivePowerUps()
+    {
+        return activePowerUpsDurationDictionary;
+    }
+
 }

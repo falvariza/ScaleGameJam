@@ -153,4 +153,9 @@ public class PowerUp : MonoBehaviour
         // TODO could tighten this and inspect the sfx? Hard to know how many, as subclasses could have spawned their own
         Destroy(gameObject);
     }
+
+    public float GetPowerUpDuration()
+    {
+        return powerUpDuration;
+    }
 }
