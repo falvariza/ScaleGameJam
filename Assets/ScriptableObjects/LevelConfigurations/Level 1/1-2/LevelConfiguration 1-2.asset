@@ -16,4 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59b8531f88a594ad484e9f73f266aa96, type: 2}
   - {fileID: 11400000, guid: 13777480121b94132a59a8acbbc5a979, type: 2}
   - {fileID: 11400000, guid: 51598743b5096457483d43b14a949ea0, type: 2}
-  levelDuration: 20
+  - {fileID: 11400000, guid: 3b2115279e0f24db78e1541db94524af, type: 2}
+  levelDuration: 40

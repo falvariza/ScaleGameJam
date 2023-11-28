@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     public EventHandler OnExpandingSizeStarted;
     public EventHandler OnExpandingSizeFinished;
+    public EventHandler OnResetPlayer;
 
     private SizeSystem sizeSystem;
 
@@ -122,6 +123,7 @@ public class Player : MonoBehaviour
         targetScale = playerScale;
         GetBlastAttackSystem().Reset();
         StopCoroutine(ScalePlayer());
+        OnResetPlayer?.Invoke(this, EventArgs.Empty);
     }
 
     public bool HasIncreasedSize()

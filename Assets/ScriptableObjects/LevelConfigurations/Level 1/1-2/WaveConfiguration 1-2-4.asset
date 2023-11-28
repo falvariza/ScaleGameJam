@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5761de0e7947445db24f0d42b9fb381, type: 3}
-  m_Name: WaveConfiguration 1-2-3
+  m_Name: WaveConfiguration 1-2-4
   m_EditorClassIdentifier: 
   enemiesWaveConfigurations:
   - enemiesPrefabs:
     - {fileID: 9087014262292972874, guid: 956a5874d4be84e85af18234c76d0591, type: 3}
-    maxNumberOfEnemiesPerSpawn: 8
-    spawnInterval: 1
-    spawnIntervalRandomness: 0.5
+    maxNumberOfEnemiesPerSpawn: 14
+    spawnInterval: 0.5
+    spawnIntervalRandomness: 0.2
   powerUpsWaveConfigurations: []
   waveStartingTime: 20
