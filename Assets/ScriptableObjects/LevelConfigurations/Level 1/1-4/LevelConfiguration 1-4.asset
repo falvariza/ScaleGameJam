@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b070aa9a30dec40a3a5574d2442d2133, type: 3}
+  m_Name: LevelConfiguration 1-4
+  m_EditorClassIdentifier: 
+  wavesConfigurations:
+  - {fileID: 11400000, guid: 0d9294d321e7c45f6b95d6ecf707f72e, type: 2}
+  - {fileID: 11400000, guid: 531e5d257535048cf95fd1659d5b2476, type: 2}
+  - {fileID: 11400000, guid: a2bcfbb1ac5134a1c8efa7c950b4d9a3, type: 2}
+  - {fileID: 11400000, guid: 3b0cedfef055346e58a6c91a89a7264f, type: 2}
+  levelDuration: 40
