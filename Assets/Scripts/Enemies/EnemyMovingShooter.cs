@@ -34,12 +34,12 @@ public class EnemyMovingShooter : EnemyShooter
         }
         else if (x == spawnBordersCoordinates.rightBorderSpawnX)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 180);
             spawnPosition = LevelManager.SpawnPosition.Right;
         }
         else if (y == spawnBordersCoordinates.topBorderSpawnY)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 90);
+            transform.rotation = Quaternion.Euler(0, 0, -90);
             spawnPosition = LevelManager.SpawnPosition.Top;
         }
         else if (y == spawnBordersCoordinates.bottomBorderSpawnY)

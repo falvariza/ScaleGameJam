@@ -84,8 +84,8 @@ MonoBehaviour:
   expiresImmediately: 0
   powerUpVisual: {fileID: 9153325253682758633}
   shouldDestroyAfterTimeout: 1
-  destroyTimeout: 3
-  powerUpDuration: 5
+  destroyTimeout: 2
+  powerUpDuration: 3.5
   shieldPrefab: {fileID: 8381340460203893462, guid: 68c806047b94a4a43b13e2650c493fbe, type: 3}
 --- !u!1 &4867845099015952661
 GameObject:
