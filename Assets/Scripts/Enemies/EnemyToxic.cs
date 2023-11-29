@@ -70,7 +70,7 @@ public class EnemyToxic : Enemy
     }
 
     private void OnDrawGizmos() {
-        Gizmos.DrawSphere(transform.position, reachRadius);
+        // Gizmos.DrawSphere(transform.position, reachRadius);
     }
 
 }

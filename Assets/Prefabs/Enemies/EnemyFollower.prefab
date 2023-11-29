@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9087014262292972874}
   - component: {fileID: 6777952165135196167}
   - component: {fileID: 8490255980325242191}
-  - component: {fileID: 3793094449591726459}
+  - component: {fileID: 8252440103725906163}
+  - component: {fileID: 2839619396758238339}
   m_Layer: 0
   m_Name: EnemyFollower
   m_TagString: Untagged
@@ -77,11 +78,13 @@ MonoBehaviour:
   maxXDestroy: 20
   maxYDestroy: 20
   startMovementTimerMax: 0.5
+  spawnsInsideBounds: 0
   speed: 2
   targetFindRadius: 3
   targetLeaveRadius: 4
---- !u!60 &3793094449591726459
-PolygonCollider2D:
+  debugMode: 0
+--- !u!58 &8252440103725906163
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -112,23 +115,30 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.000000029802322, y: 0.20796943}
-      - {x: -0.3747118, y: 0.0071220696}
-      - {x: -0.015822321, y: -0.21107006}
-      - {x: 0.34997988, y: -0.010780454}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: 0.0010396038, y: 0.001195682}
+  serializedVersion: 2
+  m_Radius: 0.1225892
+--- !u!95 &2839619396758238339
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4991667662687565804}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50fffd20c804d49f09d6e0d2359b5bb8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7835354093388652538
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 7835354093388652538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 0.43, y: 0.43, z: 0.43}
+  m_LocalScale: {x: 0.027435362, y: 0.027435362, z: 0.027435362}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9087014262292972874}
@@ -202,7 +212,7 @@ SpriteRenderer:
   m_SortingLayerID: 1892048533
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ddb41a62a14d243c48c35a2afe5adafc, type: 3}
   m_Color: {r: 0.5235849, g: 0.97261983, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
