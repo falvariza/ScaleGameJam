@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 6917498931412747905}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1176838137137515493
 CapsuleCollider2D:
@@ -83,8 +83,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expiresImmediately: 0
   powerUpVisual: {fileID: 9153325253682758633}
-  shouldDestroyAfterTimeout: 0
-  destroyTimeout: 0
+  shouldDestroyAfterTimeout: 1
+  destroyTimeout: 2
   powerUpDuration: 2
   speedBoostMultiplier: 0.5
 --- !u!1 &4867845099015952661
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c0b82aa482ee34dce883f16bb02bb197, type: 3}
-  m_Color: {r: 0.7058824, g: 0.003921579, b: 0.6064304, a: 1}
+  m_Color: {r: 1, g: 0.5801887, b: 0.9413672, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

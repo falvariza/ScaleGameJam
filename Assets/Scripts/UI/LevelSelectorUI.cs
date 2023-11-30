@@ -11,6 +11,7 @@ public class LevelSelectorUI : MonoBehaviour
     [SerializeField] private Button levelButtonTemplate;
     [SerializeField] private Button backToMenuButton;
     [SerializeField] private Transform buttonsContainer;
+    [SerializeField] private Color buttonDisabledColor = Color.gray;
 
 
     private void Awake()
@@ -52,6 +53,7 @@ public class LevelSelectorUI : MonoBehaviour
             else
             {
                 levelButton.interactable = false;
+                levelButton.GetComponent<Image>().color = buttonDisabledColor;
             }
         }
     }

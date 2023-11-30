@@ -78,9 +78,9 @@ public class PowerUpsManager : MonoBehaviour
 
     private void SpawnReduceSizePowerUps(int count = 1)
     {
-
         for(int i = 0; i < count; i++)
         {
+            if (GameManager.Instance.IsGameOver()) return;
             Vector3 spawnPosition = GenerateSpawnPosition();
             Instantiate(powerUpReduceSizePrefab, spawnPosition, Quaternion.identity);
         }

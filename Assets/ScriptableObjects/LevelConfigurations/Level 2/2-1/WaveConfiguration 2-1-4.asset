@@ -24,4 +24,4 @@ MonoBehaviour:
     spawnInterval: 1.5
     spawnIntervalRandomness: 0.5
   powerUpsWaveConfigurations: []
-  waveStartingTime: 20
+  waveStartingTime: 30
