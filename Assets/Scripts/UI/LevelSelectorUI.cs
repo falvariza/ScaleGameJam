@@ -38,7 +38,9 @@ public class LevelSelectorUI : MonoBehaviour
         levelButtonTemplate.gameObject.SetActive(false);
         for (int i = 0; i < levels.Length; i++)
         {
+            FullLevelConfigurationSO level = levels[i];
             Button levelButton = Instantiate(levelButtonTemplate, buttonsContainer);
+            levelButton.GetComponent<Image>().color = level.levelColor;
             levelButton.gameObject.SetActive(true);
             levelButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Level {i + 1}";
             int levelIndex = i;
