@@ -87,7 +87,6 @@ public class LevelCompletedUI : MonoBehaviour
 
     private void OnExitButtonClicked()
     {
-        MainMenuStaticData.ShowLevelSelectorUI = true;
-        SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
+        GameManager.Instance.NavigateToLevelSelectorMenu();
     }
 }

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnCompleteFullLevel;
     public event EventHandler OnStateChanged;
     public event EventHandler OnRestartGame;
+    public event EventHandler OnPauseGame;
+    public event EventHandler OnResumeGame;
 
     [SerializeField] private FullLevelConfigurationSO fullLevelConfiguration;
 
@@ -30,8 +32,8 @@ public class GameManager : MonoBehaviour
     private float gamePlayingTimerMax;
     private float countdownToStartTimerMax = 3f;
     private float countdownToStartTimer;
-
     private float gamePlayingTimer;
+    private bool isGamePaused = false;
 
     private void Awake()
     {
@@ -48,6 +50,23 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         HandleGameState();
+        HandlePauseInput();
+    }
+
+
+    private void HandlePauseInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.IsGamePlaying())
+        {
+            if (GameManager.Instance.IsGamePaused())
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
 
     private void HandleGameState()
@@ -204,5 +223,30 @@ public class GameManager : MonoBehaviour
     public State GetState()
     {
         return gameState;
+    }
+
+    public bool IsGamePaused()
+    {
+        return isGamePaused;
+    }
+
+    public void PauseGame()
+    {
+        isGamePaused = true;
+        Time.timeScale = 0f;
+        OnPauseGame?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ResumeGame()
+    {
+        isGamePaused = false;
+        Time.timeScale = 1f;
+        OnResumeGame?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void NavigateToLevelSelectorMenu()
+    {
+        MainMenuStaticData.ShowLevelSelectorUI = true;
+        SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
     }
 }

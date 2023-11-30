@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         if (sizeSystem.IsExploded() || !GameManager.Instance.IsGamePlaying()) return;
 
         float speed = sizeSystem.GetSpeed();
-        transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed;
+        transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized * Time.deltaTime * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

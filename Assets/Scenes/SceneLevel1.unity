@@ -219,30 +219,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3464312501952281584, guid: 941b67adaf1234707b5772f968e52509, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5997961016953486897, guid: 941b67adaf1234707b5772f968e52509, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5997961016953486897, guid: 941b67adaf1234707b5772f968e52509, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5997961016953486897, guid: 941b67adaf1234707b5772f968e52509, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5997961016953486897, guid: 941b67adaf1234707b5772f968e52509, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6198972186764186019, guid: 941b67adaf1234707b5772f968e52509, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 19.97998
-      objectReference: {fileID: 0}
     - target: {fileID: 9051528254230770645, guid: 941b67adaf1234707b5772f968e52509, type: 3}
       propertyPath: m_Pivot.x
       value: 0
