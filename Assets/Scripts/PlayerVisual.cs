@@ -6,6 +6,8 @@ public class PlayerVisual : MonoBehaviour
 {
     [SerializeField] private Transform blastHaloTransform;
     [SerializeField] private Player player;
+    [SerializeField] private ParticleSystem explosionParticleSystem;
+    [SerializeField] private Transform playerBody;
 
     private Animator animator;
 
@@ -23,6 +25,17 @@ public class PlayerVisual : MonoBehaviour
         player.OnExpandingSizeStarted += Player_OnExpandingSizeStarted;
         player.OnExpandingSizeFinished += Player_OnExpandingSizeFinished;
         player.OnResetPlayer += Player_OnResetPlayer;
+        GameManager.Instance.OnGameOver += GameManager_OnGameOver;
+    }
+
+    private void GameManager_OnGameOver(object sender, System.EventArgs e)
+    {
+        MusicManager.Instance.Stop();
+        SoundManager.Instance.PlayExplosionSound(transform.position);
+        explosionParticleSystem.Play();
+
+        CameraHandler.Instance.CameraShake();
+        playerBody.gameObject.SetActive(false);
     }
 
     private void SizeSystem_OnSizeIncreased(object sender, System.EventArgs e)
@@ -56,6 +69,7 @@ public class PlayerVisual : MonoBehaviour
 
     private void Player_OnResetPlayer(object sender, System.EventArgs e)
     {
+        playerBody.gameObject.SetActive(true);
         animator.SetBool("isExpanding", false);
         blastHaloTransform.gameObject.SetActive(false);
     }

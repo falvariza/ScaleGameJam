@@ -13,6 +13,7 @@ public class CameraHandler : MonoBehaviour
 
     private float orthographicSize;
     private Vector3 originalPosition;
+    private CinemachineBasicMultiChannelPerlin cbmcp;
 
     private void Awake()
     {
@@ -55,5 +56,19 @@ public class CameraHandler : MonoBehaviour
         virtualCamera.Follow = null;
 
         callback?.Invoke();
+    }
+
+    public void CameraShake(float duration = 1f)
+    {
+        cbmcp = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        cbmcp.m_AmplitudeGain = 1f;
+
+        StartCoroutine(StopCameraShake(duration));
+    }
+
+    private IEnumerator StopCameraShake(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        cbmcp.m_AmplitudeGain = 0f;
     }
 }

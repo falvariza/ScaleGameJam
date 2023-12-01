@@ -61,6 +61,12 @@ public class LevelManager : MonoBehaviour
         {
             StopWaves();
         }
+
+        if (gameState == GameManager.State.GameOver)
+        {
+            DestroyAllEnemies();
+            CameraHandler.Instance.CameraShake(2f);
+        }
     }
 
     private void Update()

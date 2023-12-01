@@ -11,6 +11,8 @@ public class LevelCompletedUI : MonoBehaviour
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button exitButton;
 
+    private float gameOverUIDelay = 3f;
+
     private void Awake()
     {
         nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
@@ -34,7 +36,7 @@ public class LevelCompletedUI : MonoBehaviour
             ShowLevelCompleted();
         } else if (GameManager.Instance.IsGameOver())
         {
-            ShowGameOver();
+            Invoke(nameof(ShowGameOver), gameOverUIDelay);
         }
         else {
             Hide();
@@ -71,6 +73,8 @@ public class LevelCompletedUI : MonoBehaviour
     {
         titleText.text = "Game Over";
         levelProgressText.gameObject.SetActive(false);
+        nextLevelButton.gameObject.SetActive(true);
+        exitButton.gameObject.SetActive(true);
         nextLevelButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";
         gameObject.SetActive(true);
     }

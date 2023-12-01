@@ -29,7 +29,7 @@ public class PowerUpsManager : MonoBehaviour
 
     private void Update()
     {
-        if (Player.Instance.HasIncreasedSize())
+        if (Player.Instance.HasIncreasedSize() && GameManager.Instance.IsGamePlaying())
         {
             respawnPowerUpReduceSizeTimer -= Time.deltaTime;
 

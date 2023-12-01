@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
         HandlePauseInput();
     }
 
-
     private void HandlePauseInput()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.IsGamePlaying())
@@ -169,7 +168,6 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0f;
         UpdateState(State.GameOver);
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
