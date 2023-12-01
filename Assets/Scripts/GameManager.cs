@@ -257,4 +257,9 @@ public class GameManager : MonoBehaviour
         MainMenuStaticData.ShowLevelSelectorUI = true;
         SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
     }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevelIndex + 1;
+    }
 }

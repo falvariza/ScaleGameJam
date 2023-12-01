@@ -9,19 +9,21 @@ public class GameStatsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Transform livesContainer;
     [SerializeField] private Image lifeImagePrefab;
-    [SerializeField] private Transform powerUpContainer;
-    [SerializeField] private Transform powerUpItemTemplate;
+    // [SerializeField] private Transform powerUpContainer;
+    // [SerializeField] private Transform powerUpItemTemplate;
+    [SerializeField] private TextMeshProUGUI currentWaveText;
 
     private void Start()
     {
-        powerUpItemTemplate.gameObject.SetActive(false);
+        // powerUpItemTemplate.gameObject.SetActive(false);
     }
 
     private void Update()
     {
         countdownText.text = GameManager.Instance.GetGamePlayingCountdownInSeconds().ToString();
         ShowLives();
-        // ShowPowerUps();1
+        currentWaveText.text = "Wave " + GameManager.Instance.GetCurrentLevel();
+        // ShowPowerUps();
     }
 
     private void ShowLives()
@@ -33,8 +35,7 @@ public class GameStatsUI : MonoBehaviour
         {
             for (int i = livesContainerCount; i < lives; i++)
             {
-                Image lifeImage = Instantiate(lifeImagePrefab, livesContainer);
-                lifeImage.color = Color.white;
+                Instantiate(lifeImagePrefab, livesContainer);
             }
         }
         else if (lives < livesContainerCount)
@@ -46,26 +47,26 @@ public class GameStatsUI : MonoBehaviour
         }
     }
 
-    private void ShowPowerUps()
-    {
-        Dictionary<PowerUpSO, float> activePowerUps = PowerUpsManager.Instance.GetActivePowerUps();
+    // private void ShowPowerUps()
+    // {
+    //     Dictionary<PowerUpSO, float> activePowerUps = PowerUpsManager.Instance.GetActivePowerUps();
 
-        // destroy all children of powerUpContainer
-        foreach (Transform child in powerUpContainer)
-        {
-            Destroy(child.gameObject);
-        }
+    //     // destroy all children of powerUpContainer
+    //     foreach (Transform child in powerUpContainer)
+    //     {
+    //         Destroy(child.gameObject);
+    //     }
 
-        foreach (KeyValuePair<PowerUpSO, float> activePowerUp in activePowerUps)
-        {
-            Transform powerUpItemTransform = Instantiate(powerUpItemTemplate, powerUpContainer);
-            powerUpItemTransform.gameObject.SetActive(true);
+    //     foreach (KeyValuePair<PowerUpSO, float> activePowerUp in activePowerUps)
+    //     {
+    //         Transform powerUpItemTransform = Instantiate(powerUpItemTemplate, powerUpContainer);
+    //         powerUpItemTransform.gameObject.SetActive(true);
 
-            Image powerUpImage = powerUpItemTransform.Find("Image").GetComponent<Image>();
-            powerUpImage.sprite = activePowerUp.Key.powerUpIcon;
+    //         Image powerUpImage = powerUpItemTransform.Find("Image").GetComponent<Image>();
+    //         powerUpImage.sprite = activePowerUp.Key.powerUpIcon;
 
-            TextMeshProUGUI powerUpDurationText = powerUpItemTransform.Find("Duration").GetComponent<TextMeshProUGUI>();
-            powerUpDurationText.text = activePowerUp.Value.ToString("F1");
-        }
-    }
+    //         TextMeshProUGUI powerUpDurationText = powerUpItemTransform.Find("Duration").GetComponent<TextMeshProUGUI>();
+    //         powerUpDurationText.text = activePowerUp.Value.ToString("F1");
+    //     }
+    // }
 }

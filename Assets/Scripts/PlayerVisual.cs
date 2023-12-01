@@ -34,7 +34,6 @@ public class PlayerVisual : MonoBehaviour
         SoundManager.Instance.PlayExplosionSound(transform.position);
         explosionParticleSystem.Play();
 
-        CameraHandler.Instance.CameraShake();
         playerBody.gameObject.SetActive(false);
     }
 
