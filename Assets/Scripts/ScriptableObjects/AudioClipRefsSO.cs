@@ -6,4 +6,5 @@ using UnityEngine;
 public class AudioClipRefsSO : ScriptableObject
 {
     public AudioClip[] explosion;
+    public AudioClip[] hit;
 }

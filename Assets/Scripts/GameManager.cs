@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour
         Player.Instance.ResetPlayer();
         LevelManager.Instance.ResetLevel();
         PowerUpsManager.Instance.ResetPowerUps();
+        CameraHandler.Instance.ResetCamera();
         StartGame();
     }
 

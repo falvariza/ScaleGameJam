@@ -29,4 +29,9 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(audioClipRefs.explosion, position, volume);
     }
+
+    public void PlayHitSound(Vector3 position, float volume = 3f)
+    {
+        PlaySound(audioClipRefs.hit, position, volume);
+    }
 }

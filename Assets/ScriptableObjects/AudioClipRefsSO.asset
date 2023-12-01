@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion:
   - {fileID: 8300000, guid: ff41b7183972f4b6798f64fa34b290fc, type: 3}
+  hit:
+  - {fileID: 8300000, guid: 1f06e0217009d48db97294ace73493b9, type: 3}

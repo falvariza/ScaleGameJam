@@ -91,6 +91,10 @@ public class Player : MonoBehaviour
             if (sizeSystem.IsExploded()) {
                 GameManager.Instance.GameOver();
             }
+            else
+            {
+                CameraHandler.Instance.CameraShake(.2f);
+            }
         }
     }
 

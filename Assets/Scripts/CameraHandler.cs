@@ -26,6 +26,13 @@ public class CameraHandler : MonoBehaviour
         originalPosition = virtualCamera.transform.position;
     }
 
+    public void ResetCamera()
+    {
+        virtualCamera.transform.position = originalPosition;
+        virtualCamera.m_Lens.OrthographicSize = orthographicSize;
+        virtualCamera.Follow = null;
+    }
+
     public void LerpDownCameraSize(float playingTime)
     {
         float newOrthographicSize = Mathf.Lerp(orthographicSize / 2f, orthographicSize, playingTime);
