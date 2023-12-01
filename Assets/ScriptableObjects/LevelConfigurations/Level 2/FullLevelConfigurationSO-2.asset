@@ -19,5 +19,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63e5a9035d93a4dc1b430073c39ed239, type: 2}
   - {fileID: 11400000, guid: 9cd4c997a1dfd41e7b8cde5e53e80cfc, type: 2}
   levelScene: 3
-  levelColor: {r: 0.42352942, g: 0.03137255, b: 0.20392157, a: 1}
+  levelColor: {r: 0.4339623, g: 0, b: 0.11477233, a: 1}
   audioClip: {fileID: 8300000, guid: fd29651fab20d41b598a3405d5ea1e94, type: 3}

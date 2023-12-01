@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5761de0e7947445db24f0d42b9fb381, type: 3}
+  m_Name: WaveConfiguration 4-5-1
+  m_EditorClassIdentifier: 
+  enemiesWaveConfigurations:
+  - enemiesPrefabs:
+    - {fileID: 9087014262292972874, guid: 7582f80d846ac43e29e25dc1c906759a, type: 3}
+    - {fileID: 9087014262292972874, guid: 331e0a981cfac4b469fb1c59fee59fbc, type: 3}
+    maxNumberOfEnemiesPerSpawn: 3
+    spawnInterval: 1
+    spawnIntervalRandomness: 0.2
+  - enemiesPrefabs:
+    - {fileID: 9087014262292972874, guid: a78e58c0225fb472d96fa722ff7b14b2, type: 3}
+    maxNumberOfEnemiesPerSpawn: 2
+    spawnInterval: 2.5
+    spawnIntervalRandomness: 0.5
+  powerUpsWaveConfigurations:
+  - powerUps:
+    - {fileID: 11400000, guid: 6ccaf9a3679464b5a9ec29324409df47, type: 2}
+    maxNumberOfPowerUpsPerSpawn: 1
+    spawnInterval: 8
+    spawnIntervalRandomness: 0.5
+  waveStartingTime: 0

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FullLevelConfigurationSO-4
   m_EditorClassIdentifier: 
   levelsConfigurations:
-  - {fileID: 11400000, guid: db176abcd8783443e8d329efa09252ee, type: 2}
-  - {fileID: 11400000, guid: 6ff48e4eca9e44862b5b75310c6a6cb9, type: 2}
-  - {fileID: 11400000, guid: 668a92f1bc30e46cb9224344bed9d6e2, type: 2}
-  - {fileID: 11400000, guid: f17776624980542628c0fe8d2441d970, type: 2}
-  - {fileID: 11400000, guid: c60402143d94049f5b52a5bb9ba626a6, type: 2}
-  levelScene: 4
-  levelColor: {r: 0.07869276, g: 0.031372555, b: 0.42352942, a: 1}
-  audioClip: {fileID: 8300000, guid: 5c63f20a91d204fa89963a358af43080, type: 3}
+  - {fileID: 11400000, guid: 1c53f39f8480b41efae0824ea88c69dd, type: 2}
+  - {fileID: 11400000, guid: 653421fab37d24286abf4a161003920b, type: 2}
+  - {fileID: 11400000, guid: 58f571c53798949f38e08e71c355d3c9, type: 2}
+  - {fileID: 11400000, guid: 24735ac114f66403e84eda8f6458db36, type: 2}
+  - {fileID: 11400000, guid: 1bb35d74ab3de402fb997d771493cbc3, type: 2}
+  levelScene: 5
+  levelColor: {r: 0.4811321, g: 0, b: 0.31949466, a: 1}
+  audioClip: {fileID: 8300000, guid: 608afbafdac2340f8a64633bb5abd0c0, type: 3}

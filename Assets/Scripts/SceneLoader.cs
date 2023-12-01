@@ -12,6 +12,7 @@ public class SceneLoader : MonoBehaviour
         SceneLevel1,
         SceneLevel2,
         SceneLevel3,
+        SceneLevel4,
     }
 
     private static Scene targetScene;

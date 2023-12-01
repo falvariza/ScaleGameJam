@@ -181,7 +181,7 @@ SpriteRenderer:
   m_SortingLayerID: 1974326019
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f2e64e734b3234692a832f4e4c0f72eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 016defc387ab04ab899f4a50fe223364, type: 3}
   m_Color: {r: 0.078431375, g: 0.03137255, b: 0.42352942, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -566,6 +566,10 @@ PrefabInstance:
     - target: {fileID: 3464312501952281584, guid: 941b67adaf1234707b5772f968e52509, type: 3}
       propertyPath: m_Name
       value: LevelCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464312501952281584, guid: 941b67adaf1234707b5772f968e52509, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3785014245797430231, guid: 941b67adaf1234707b5772f968e52509, type: 3}
       propertyPath: m_AnchorMax.y
