@@ -111,14 +111,32 @@ public class Player : MonoBehaviour
 
     public void ResetPlayerPosition()
     {
-        transform.position = Vector3.zero;
+        StartCoroutine(MakeThePlayerTravelToTheCenter());
     }
+
+    private IEnumerator MakeThePlayerTravelToTheCenter()
+    {
+        float timer = 0f;
+        float duration = 2f;
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = Vector3.zero;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, timer / duration);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+    }
+
 
     public void ResetPlayer()
     {
         // TODO: this can be refactored to send an event that the other components listen
         sizeSystem.ResetSize();
-        ResetPlayerPosition();
+        transform.position = Vector3.zero;
         playerScale = sizeSystem.CurrentSize.size;
         targetScale = playerScale;
         GetBlastAttackSystem().Reset();

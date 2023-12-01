@@ -102,6 +102,13 @@ public class GameManager : MonoBehaviour
     {
         gamePlayingTimer -= Time.deltaTime;
 
+        if (gamePlayingTimer < 2f)
+        {
+            float timeScale = Mathf.Lerp(0.1f, 1f, gamePlayingTimer / 2f);
+            Time.timeScale = timeScale;
+            CameraHandler.Instance.LerpDownCameraSize(gamePlayingTimer / 2f);
+        }
+
         if (gamePlayingTimer <= 0f)
         {
             CompleteLevel();
@@ -110,14 +117,18 @@ public class GameManager : MonoBehaviour
 
     private void CompleteLevel()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
 
         UpdateState(State.CompletedLevel);
 
         if (currentLevelIndex == fullLevelConfiguration.levelsConfigurations.Length - 1)
         {
-            GameSessionManager.Instance.IncreaseLevel();
+            GameSessionManager.Instance.IncreaseLevelInHistory();
             OnCompleteFullLevel?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            OnCompleteLevel?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -152,7 +163,6 @@ public class GameManager : MonoBehaviour
 
     public void StartNextLevel()
     {
-        OnCompleteLevel?.Invoke(this, EventArgs.Empty);
         currentLevelIndex++;
         StartGame();
     }

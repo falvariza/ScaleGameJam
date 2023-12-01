@@ -28,7 +28,7 @@ public class GameSessionManager : MonoBehaviour
         MaxFullLevelCompleted = level;
     }
 
-    public void IncreaseLevel()
+    public void IncreaseLevelInHistory()
     {
         MaxFullLevelCompleted++;
         PlayerPrefs.SetInt("MaxFullLevelCompleted", MaxFullLevelCompleted);

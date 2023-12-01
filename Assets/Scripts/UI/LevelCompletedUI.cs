@@ -53,15 +53,17 @@ public class LevelCompletedUI : MonoBehaviour
         if (isFullLevelCompleted)
         {
             levelProgressText.gameObject.SetActive(false);
+            nextLevelButton.gameObject.SetActive(true);
+            exitButton.gameObject.SetActive(true);
+            nextLevelButton.GetComponentInChildren<TextMeshProUGUI>().text = "Replay";
+            exitButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
         }
         else
         {
             levelProgressText.gameObject.SetActive(true);
+            nextLevelButton.gameObject.SetActive(false);
+            exitButton.gameObject.SetActive(false);
         }
-        string nextLevelText = isFullLevelCompleted ? "Replay" : "Next Wave";
-        nextLevelButton.GetComponentInChildren<TextMeshProUGUI>().text = nextLevelText;
-        string exitText = isFullLevelCompleted ? "Continue" : "Exit";
-        exitButton.GetComponentInChildren<TextMeshProUGUI>().text = exitText;
         gameObject.SetActive(true);
     }
 

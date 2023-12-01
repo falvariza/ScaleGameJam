@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnCompleteLevel += HandleCompleteLevel;
+        GameManager.Instance.OnCompleteFullLevel += HandleCompleteFullLevel;
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
 
@@ -38,6 +39,19 @@ public class LevelManager : MonoBehaviour
         this.levelConfiguration = null;
 
         Player.Instance.ResetPlayerPosition();
+        CameraHandler.Instance.ResetCameraSize(() => {
+            GameManager.Instance.StartNextLevel();
+        });
+    }
+
+    private void HandleCompleteFullLevel(object sender, System.EventArgs e)
+    {
+        DestroyAllEnemies();
+        this.currentWaveIndex = 0;
+        this.levelConfiguration = null;
+
+        Player.Instance.ResetPlayerPosition();
+        CameraHandler.Instance.ResetCameraSize();
     }
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e)

@@ -215,9 +215,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2395223176605663277, guid: 941b67adaf1234707b5772f968e52509, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 256.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687062784197650809, guid: 941b67adaf1234707b5772f968e52509, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 402
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045784775725534283, guid: 941b67adaf1234707b5772f968e52509, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3464312501952281584, guid: 941b67adaf1234707b5772f968e52509, type: 3}
       propertyPath: m_Name
       value: LevelCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602915255916224613, guid: 941b67adaf1234707b5772f968e52509, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630204444906298630, guid: 941b67adaf1234707b5772f968e52509, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 402
       objectReference: {fileID: 0}
     - target: {fileID: 9051528254230770645, guid: 941b67adaf1234707b5772f968e52509, type: 3}
       propertyPath: m_Pivot.x
